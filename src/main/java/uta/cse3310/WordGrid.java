@@ -4,8 +4,8 @@ public class WordGrid{
 	
 	public char[][] grid;
 	public String[] wordList;
-    public int gridSize;
-    public Random random;
+    	public int gridSize;
+    	public Random random;
 	
 	public WordGrid(){
 
@@ -13,17 +13,17 @@ public class WordGrid{
 
 	}
 
-    public void initializeGrid() {
+    	public void initializeGrid() {
 
         // Method to Generate Grid w/ spaces. \\
 
-    }
+   	}
 
-    public void displayGrid() {
+    	public void displayGrid() {
 
         // Method to display Grid. \\
 
-    }
+    	}
 	
 	public boolean SelectionValidation(){
 
