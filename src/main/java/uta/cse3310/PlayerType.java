@@ -9,7 +9,7 @@ public enum PlayerType {
 
         @Override
         public void method2() {
-            // Empty method for NOPLAYER
+           
         }
     },
     XPLAYER {
@@ -20,7 +20,7 @@ public enum PlayerType {
 
         @Override
         public void method2() {
-            // Empty method for XPLAYER
+    
         }
     },
     OPLAYER {
@@ -31,16 +31,16 @@ public enum PlayerType {
 
         @Override
         public void method2() {
-            // Empty method for OPLAYER
+        
         }
     };
 
     // Constructor
     PlayerType() {
-        // Empty constructor
+      
     }
 
-    // Empty methods
+
     public abstract void method1();
     public abstract void method2();
 }
