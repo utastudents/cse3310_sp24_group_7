@@ -8,7 +8,7 @@ public class LobbyScreen
     }
     public void createLobby()
     {
-        
+        return;
     }
     public void waitingLobby()
     {
@@ -27,7 +27,7 @@ public class LobbyScreen
     {
         return;
     }
-    public String displayMessage (String nickanme, String message)
+    public String displayMessage (String nickname, String message)
     {
         //Display the username with the following information
         return "message";
