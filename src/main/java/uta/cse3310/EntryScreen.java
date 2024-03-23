@@ -18,6 +18,15 @@ public class EntryScreen {
         // Method to get the player's nick/handle from the input field \\
         return null;
     }
+    public void setPlayerHighlight(int color)
+    {
+        //Method to set player highlight color for selecting words
+    }
+    public void getPlayerHighlight()
+    {
+        // Method to get player highlight color
+        return null;
+    }
 
     public void submitButtonPressed() {
         // Method to handle the event when the submit button is pressed \\
