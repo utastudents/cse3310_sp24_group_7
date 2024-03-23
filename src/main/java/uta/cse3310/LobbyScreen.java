@@ -2,6 +2,10 @@
 
 public class LobbyScreen 
 {
+    public LobbyScreen()
+    {
+        //Constructor
+    }
     public void startGame()
     {
         return;
