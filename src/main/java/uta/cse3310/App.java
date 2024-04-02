@@ -41,19 +41,19 @@ public class App extends WebSocketServer {
   }
   
   public void onMessage(WebSocket conn, String message) {
-    // Your implementation for handling incoming messages
+    // implementation for handling incoming messages
   }
 
   public void onClose(WebSocket conn, int code, String reason, boolean remote) {
-    // Your implementation for handling connection close
+    // implementation for handling connection close
   }
 
   public void onError(WebSocket conn, Exception ex) {
-    // Your implementation for handling errors
+    // implementation for handling errors
   }
 
   public void onStart() {
-    // Your implementation for actions to be taken when the server starts
+    // implementation for actions to be taken when the server starts
   }
 
   public static void main(String[] args) {
