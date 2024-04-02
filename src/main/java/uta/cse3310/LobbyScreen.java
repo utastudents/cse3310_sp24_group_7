@@ -29,7 +29,7 @@ public class LobbyScreen
     }
     public String enterMessage(String message)
     {
-        return;
+        return message;
     }
     public String displayMessage (String nickname, String message)
     {

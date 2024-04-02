@@ -25,7 +25,7 @@ public class EntryScreen {
     public void getPlayerHighlight()
     {
         // Method to get player highlight color
-        return null;
+   
     }
 
     public void submitButtonPressed() {
