@@ -1,5 +1,7 @@
 package uta.cse3310;
 
+import java.util.Random;
+
 public class WordGrid{
 	
 	public char[][] grid;
