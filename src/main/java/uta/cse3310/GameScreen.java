@@ -1,4 +1,4 @@
-// package uta.cse3310;
+package uta.cse3310;
 
 import java.util.Random;
 import java.util.*;
@@ -6,7 +6,7 @@ public class GameScreen {
 
     public String[] Msg;
     public int GameId;
-
+    public boolean isOpen;
 
     private String[] numOfUsers = {"User 1", "User 2", "User 3", "User 4"};
     private static String gridString = "GRID:";
