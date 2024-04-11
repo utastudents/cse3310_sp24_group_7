@@ -1,76 +1,111 @@
 package uta.cse3310;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.net.InetSocketAddress;
-import java.net.UnknownHostException;
-import java.nio.ByteBuffer;
 import java.util.Collections;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Arrays;
+import java.util.ArrayList;
 
 import org.java_websocket.WebSocket;
-import org.java_websocket.drafts.Draft;
 import org.java_websocket.drafts.Draft_6455;
 import org.java_websocket.handshake.ClientHandshake;
 import org.java_websocket.server.WebSocketServer;
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.Vector;
-import java.time.Instant;
-import java.time.Duration;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 public class App extends WebSocketServer {
 
-  public App(int port) {
-    super(new InetSocketAddress(port));
-  }
+    GameScreen[] games = new GameScreen[5];
 
-  public App(InetSocketAddress address) {
-    super(address);
-  }
+    // List of players 
+    public ArrayList<PlayerType> playerList = new ArrayList<PlayerType>();
+    int playerCount = 0;
+    String[] nicknames = new String[20];
 
-  public App(int port, Draft_6455 draft) {
-    super(new InetSocketAddress(port), Collections.<Draft>singletonList(draft));
-  }
+    public App(int port){
+        super(new InetSocketAddress(port));
+    }
 
-  public void onOpen(WebSocket conn, ClientHandshake handshake) {
+    @Override
+    public void onOpen(WebSocket conn, ClientHandshake handshake) {
+        System.out.println(conn.getRemoteSocketAddress().getAddress().getHostAddress() + " connected");
+    }
 
-  }
+    @Override
+    public void onMessage(WebSocket conn, String message) {
+        System.out.println("Message from " + conn.getRemoteSocketAddress() + ": " + message);
+    }
+
+    @Override
+    public void onClose(WebSocket conn, int code, String reason, boolean remote) {
+      GsonBuilder builder = new GsonBuilder();
+      Gson gson = builder.create();
+      boolean playerFound = false;
+      // read connection to find the player that dc'ed
+      // and delete them
+      // this gets rid of having to do another code check for disconnects
+
+      // if player ready, decrease lobby numReady by 1
+
+      for(int i = 0; i < playerList.size(); i++){
+          if(playerList.get(i).playerConn == conn){
+              playerFound = true;
+              System.out.println("Player exiting.");
+              playerList.remove(i);
+              break;
+          }
+        }
+      if(playerFound){
+          System.out.printf("[");
+          for(PlayerType x: playerList){
+              System.out.printf(" %s", x.name);
+          }
+      }
+      System.out.println(conn + " has closed");
+      if(playerList.size() == 0){
+          System.out.println("[RESETTING...]");
+          // reset the games
+          for(int i = 0; i < 5; i++){
+              games[i] = new GameScreen();
+          }
+      }
+    }
+
+    @Override
+    public void onError(WebSocket conn, Exception ex) {
+      ex.printStackTrace();
+    }
+
+    @Override
+    public void onStart() {
+      System.out.println("Server started!");
+      setConnectionLostTimeout(0);
+      for(int i = 0; i < 5; i++){
+          games[i] = new GameScreen();
+      }
+    }
+
+    public static void main(String[] args) {
+      // HTTP_PORT environment variable
+      String httpPortEnv = System.getenv("HTTP_PORT");
+      int httpPort = (httpPortEnv != null) ? Integer.parseInt(httpPortEnv) : 9080;
   
-  public void onMessage(WebSocket conn, String message) {
-    // implementation for handling incoming messages
-  }
-
-  public void onClose(WebSocket conn, int code, String reason, boolean remote) {
-    // implementation for handling connection close
-  }
-
-  public void onError(WebSocket conn, Exception ex) {
-    // implementation for handling errors
-  }
-
-  public void onStart() {
-    // implementation for actions to be taken when the server starts
-  }
-
-  public static void main(String[] args) {
-
-    // Set up the http server
-    int port = 9080;
-    HttpServer H = new HttpServer(port, "./html");
-    H.start();
-    System.out.println("http Server started on port: " + port);
-
-    // create and start the websocket server
-
-    port = 9880;
-    App A = new App(port);
-    A.setReuseAddr(true);
-    A.start();
-    System.out.println("websocket Server started on port: " + port);
-
+      // WEBSOCKET_PORT environment variable
+      String websocketPortEnv = System.getenv("WEBSOCKET_PORT");
+      int websocketPort = (websocketPortEnv != null) ? Integer.parseInt(websocketPortEnv) : 9880;
+  
+      // Set up HTTP server
+      HttpServer httpServer = new HttpServer(httpPort, "./html");
+      httpServer.start();
+      System.out.println("HTTP Server started on port: " + httpPort);
+  
+      // start WebSocket server
+      App app = new App(websocketPort);
+      app.start();
+      System.out.println("WebSocket Server started on port: " + websocketPort);
   }
 }
