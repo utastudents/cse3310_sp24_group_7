@@ -1,11 +1,24 @@
-//package cse.3310;
+package uta.cse3310;
+import java.util.ArrayList;
 
 public class LobbyScreen 
 {
-    public LobbyScreen()
+    public ArrayList<String> playerNames = new ArrayList<String>();
+    public ArrayList<Boolean> playerStatus = new ArrayList<Boolean>();
+    public int playerNum = 0;
+    public int playersReady = 0;
+    public int gamesAvailable = 0;
+
+    // Constructor
+    public LobbyScreen(ArrayList<PlayerType> playerList)
     {
-        //Constructor
+        for(PlayerType x: playerList){
+            playerNames.add(x.name);
+            playerStatus.add(x.isReady);
+            playerNum++;
     }
+    }
+
     public void startGame()
     {
         return;
@@ -27,6 +40,16 @@ public class LobbyScreen
     {
         return;
     }
+
+    public void updateGamesAvailable(GameScreen[] games){
+      gamesAvailable = 0;
+      for(GameScreen g: games){
+        if(g.isOpen == true){
+          gamesAvailable++;
+        }
+      }
+    }
+
     public String enterMessage(String message)
     {
         return message;
@@ -40,4 +63,19 @@ public class LobbyScreen
          * EX: RSG: Nice Score
          */
     }
+
+    public void updateLobby(ArrayList<PlayerType> playerList){
+        this.playerNames.clear();
+        this.playerStatus.clear();
+        this.playerNum = 0;
+        this.playersReady = 0;
+        for(PlayerType x: playerList){
+          playerNames.add(x.name);
+          playerStatus.add(x.isReady);
+          if(x.isReady == true){
+            playersReady++;
+          }
+          playerNum++;
+        }
+      }
 }
