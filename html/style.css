@@ -26,7 +26,7 @@ button#submit {
     height: auto; /* Adjust height of the button */
     background-color: #007bff; /* Change background color of the button */
     color: white; /* Change text color of the button */
-    border: none; /* Remove the border
+    border: none; /* Remove the border */
     border-radius: 8px; /* Add border radius to make the button rounded */
     cursor: pointer; /* Add cursor pointer on hover */
     text-align: center; /* Center text horizontally */
