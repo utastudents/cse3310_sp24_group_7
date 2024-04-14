@@ -10,8 +10,25 @@
 <body>
     <div class="container">
         <div class="title">Game Screen</div>
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0a12be1d2f0038467eb35dc3c95bdccbb39d69a1
             <a href="gameScreen.html">
+                <table>
+                    <script>
+                        for (let i = 0; i < 25; i++) {
+                            document.write("<tr>");
+                            for (let j = 0; j < 25; j++) {
+                                let index = i * 25 + j;
+                                document.write(`<td><input type="button" value="?" id="b${index}" onclick="buttonclick(${index})"></input></td>`);
+                            }
+                            document.write("</tr>");
+                        }
+                    </script>
+                </table>
+
+
             <button onclick="submit">Submit</button>
             </a>
 
