@@ -1,6 +1,6 @@
 let socket; // WebSocket connection variable
 
-// Function to handle the submit button click event
+// Function to handle the submit button click 
 function handleSubmission() {
     let nickname = document.getElementById("nickname").value;
 
@@ -11,7 +11,7 @@ function handleSubmission() {
 
     console.log("Submitting nickname to server: " + nickname);
 
-    // Create a WebSocket connection to your server
+    // Create a WebSocket connection to the server
     socket = new WebSocket("ws://localhost:9880");
 
     // Handle incoming messages from the server
