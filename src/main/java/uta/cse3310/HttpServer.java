@@ -9,19 +9,22 @@ import net.freeutils.httpserver.HTTPServer.FileContextHandler;
 import net.freeutils.httpserver.HTTPServer.Request;
 import net.freeutils.httpserver.HTTPServer.Response;
 import net.freeutils.httpserver.HTTPServer.VirtualHost;
-public class HttpServer {
+public class HttpServer 
+{
 
     private static final String HTML = "./html";
     int port = 8080;
     String dirname = HTML;
 
-    public HttpServer(int portNum, String dirName) {
+    public HttpServer(int portNum, String dirName) 
+    {
         System.out.println("creating http server port " + portNum);
         port = portNum;
         dirname = dirName;
     }
 
-    public void start() {
+    public void start() 
+    {
         System.out.println("in httpd server start");
         try {
             // This File directory creates a File object based on the directory name specified
@@ -48,7 +51,8 @@ public class HttpServer {
 
             server.start();
             System.out.println("HTTPServer is listening on port " + port);
-        } catch (Exception e) {
+        } catch (Exception e) 
+        {
             System.err.println("error: " + e);
         }
 

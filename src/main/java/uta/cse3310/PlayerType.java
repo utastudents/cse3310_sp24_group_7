@@ -9,11 +9,21 @@ public class PlayerType {
   public boolean isReady;
   public WebSocket playerConn;
   
-  PlayerType(String name, WebSocket newConn){
+  PlayerType(String name, WebSocket playerConn){
     this.name = name;
     this.isReady = false;
-    this.playerConn = newConn;
+    this.playerConn = playerConn;
     this.score = 0;
   }
+
+  // Getter for Player Name
+  public String getName() {
+    return this.name;
+  }
+
+  // Getter for playerConn
+  public WebSocket getPlayerConn() {
+    return this.playerConn;
+}
 }
     

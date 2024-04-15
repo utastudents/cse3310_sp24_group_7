@@ -12,11 +12,13 @@ public class LobbyScreen
     // Constructor
     public LobbyScreen(ArrayList<PlayerType> playerList)
     {
-        for(PlayerType x: playerList){
-            playerNames.add(x.name);
-            playerStatus.add(x.isReady);
-            playerNum++;
-    }
+      this.playerNames = new ArrayList<>();
+      this.playerStatus = new ArrayList<>();
+      this.playerNum = 0;
+      this.playersReady = 0;
+      this.gamesAvailable = 0;
+
+      updateLobby(playerList);
     }
 
     public void startGame()
@@ -65,17 +67,21 @@ public class LobbyScreen
     }
 
     public void updateLobby(ArrayList<PlayerType> playerList){
-        this.playerNames.clear();
-        this.playerStatus.clear();
-        this.playerNum = 0;
-        this.playersReady = 0;
-        for(PlayerType x: playerList){
-          playerNames.add(x.name);
-          playerStatus.add(x.isReady);
-          if(x.isReady == true){
-            playersReady++;
-          }
-          playerNum++;
+         // Clear previous lobby state
+         this.playerNames.clear();
+         this.playerStatus.clear();
+         this.playerNum = 0;
+         this.playersReady = 0;
+ 
+         // Populate lobby state with the new player list
+         for (PlayerType player : playerList) {
+             this.playerNames.add(player.name);
+             this.playerStatus.add(player.isReady);
+             this.playerNum++;
+ 
+             if (player.isReady) {
+                 this.playersReady++;
         }
       }
+}
 }
