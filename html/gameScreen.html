@@ -3,40 +3,48 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TWSG Entry Screen</title>
+    <br> <br>
+    <title>TWSG Game Screen</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <label id="topMessage"></label>
 <body>
     <div class="container">
+        <br> <br>
         <div class="title">Game Screen</div>
-<<<<<<< HEAD
+        <!-- <a href="gameScreen.html"> -->
+            <table>
+    
+                <script>
 
-=======
->>>>>>> 0a12be1d2f0038467eb35dc3c95bdccbb39d69a1
-            <a href="gameScreen.html">
-                <table>
-                    <script>
-                        for (let i = 0; i < 25; i++) {
-                            document.write("<tr>");
-                            for (let j = 0; j < 25; j++) {
-                                let index = i * 25 + j;
-                                document.write(`<td><input type="button" value="?" id="b${index}" onclick="buttonclick(${index})"></input></td>`);
-                            }
-                            document.write("</tr>");
+                    // Function to generate a random character
+                    function getRandomChar() {
+                        // Define the pool of characters from which to choose
+                        const chars = "abcdefghijklmnopqrstuvwxyz";
+                        // Generate a random index within the range of available characters
+                        const randomIndex = Math.floor(Math.random() * chars.length);
+                        // Return the randomly chosen character
+                        return chars.charAt(randomIndex);
+                    }
+
+                    for (let i = 0; i < 25; i++) {
+                        document.write("<tr>");
+                        for (let j = 0; j < 25; j++) {
+                            let index = i * 25 + j;
+                            // Generate a random character for each button
+                            let randomChar = getRandomChar();
+                            document.write(`<td><input type="button" value="${randomChar}" id="b${index}" onclick="buttonclick(${index})"></input></td>`);
                         }
-                    </script>
-                </table>
+                        document.write("</tr>");
+                    }
+                </script>
+            </table>
 
 
-            <button onclick="submit">Submit</button>
-            </a>
-
-            <script>
-                func
-            </script>
-        </div>
+            <!-- <button onclick="submit">Submit</button> -->
+        <!-- </a> -->
     </div>
     <script src="script.js"></script>
 </body>
+
 </html>
