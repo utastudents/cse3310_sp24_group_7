@@ -38,45 +38,49 @@ public class App extends WebSocketServer {
 
     @Override
     public void onMessage(WebSocket conn, String message) {
-        System.out.println("Message from " + conn.getRemoteSocketAddress() + ": " + message);
-        Gson gson = new Gson();
-        JsonObject jsonMessage = gson.fromJson(message, JsonObject.class);
+    System.out.println("Message from " + conn.getRemoteSocketAddress() + ": " + message);
+    Gson gson = new Gson();
+    JsonObject jsonMessage = gson.fromJson(message, JsonObject.class);
 
-        String messageType = jsonMessage.get("type").getAsString();
-        if (messageType.equals("nickname")) {
-            String nickname = jsonMessage.get("value").getAsString();
-            System.out.println("Received nickname from client: " + nickname);
+    String messageType = jsonMessage.get("type").getAsString();
+    if (messageType.equals("nickname")) {
+        String nickname = jsonMessage.get("value").getAsString();
+        System.out.println("Received nickname from client: " + nickname);
 
-            // Check if the nickname is already in use
-            if (isNicknameUnique(nickname)) {
-                // Save the nickname to the server
-                PlayerType player = new PlayerType(nickname, conn);
-                playerList.add(player);
-                playerCount++;
+        // Check if the nickname is already in use
+        if (isNicknameUnique(nickname)) {
+            // Save the nickname to the server
+            System.out.println("Player Added!");
+            PlayerType player = new PlayerType(nickname, conn);
+            playerList.add(player);
+            playerCount++;
 
-                // Respond back to the client if needed
-                JsonObject response = new JsonObject();
-                response.addProperty("type", "acknowledge");
-                response.addProperty("message", "Nickname received and stored.");
-                conn.send(gson.toJson(response));
-            } 
-            else {
-                JsonObject response = new JsonObject();
-                response.addProperty("type", "error");
-                response.addProperty("message", "Nickname is not unique.");
-                conn.send(gson.toJson(response));
-            }
+            // Respond back to the client
+            JsonObject response = new JsonObject();
+            response.addProperty("type", "acknowledge");
+            response.addProperty("message", "Nickname received and stored.");
+            conn.send(gson.toJson(response));
+        } else {
+            // Send error response to the client
+            JsonObject errorResponse = new JsonObject();
+            errorResponse.addProperty("type", "error");
+            errorResponse.addProperty("message", "Nickname already in Use.");
+            conn.send(gson.toJson(errorResponse));
         }
     }
+}
+
+
 
     // Method to validate nickname uniqueness
     private boolean isNicknameUnique(String nickname) {
         for (PlayerType player : playerList) {
             if (player.getName().equals(nickname)) {
-                return false; 
+                System.out.println("Player not added.");
+                return false; // Nickname is not unique
             }
         }
-        return true; 
+        return true; // Nickname is unique
     }
 
 
