@@ -14,6 +14,8 @@ public class GameScreen {
 
     private final static int sizeOfArray = 50;
 
+
+
     public static char[][] generateRandomGrid(int rows, int cols) {
         char[][] grid = new char[rows][cols];
         Random rand = new Random();
@@ -40,6 +42,11 @@ public class GameScreen {
         System.out.println(gridString);
         char[][] grid = generateRandomGrid(sizeOfArray, sizeOfArray);
         printGrid(grid);
+        // for (int i = 1; i <= 4; i++ )
+        // {
+        //     String s;
+        //     s =num++);
+        // }
         return;
     }
 
