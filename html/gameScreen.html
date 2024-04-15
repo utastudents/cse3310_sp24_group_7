@@ -6,32 +6,23 @@
     <title>TWSG Entry Screen</title>
     <link rel="stylesheet" href="style.css">
 </head>
-<label id="topMessage"></label>
 <body>
     <div class="container">
         <div class="title">Game Screen</div>
-            <a href="gameScreen.html">
-                <table>
-                    <script>
-                        for (let i = 0; i < 25; i++) {
-                            document.write("<tr>");
-                            for (let j = 0; j < 25; j++) {
-                                let index = i * 25 + j;
-                                document.write(`<td><input type="button" value="?" id="b${index}" onclick="buttonclick(${index})"></input></td>`);
-                            }
-                            document.write("</tr>");
-                        }
-                    </script>
-                </table>
-
-
-            <button onclick="submit">Submit</button>
-            </a>
-
+        <a href="index.html">Back to Main Lobby</a> 
+        <table>
             <script>
-                func
+                for (let i = 0; i < 25; i++) {
+                    document.write("<tr>");
+                    for (let j = 0; j < 25; j++) {
+                        let index = i * 25 + j;
+                        document.write(`<td><input type="button" value="?" id="b${index}" onclick="buttonclick(${index})"></td>`);
+                    }
+                    document.write("</tr>");
+                }
             </script>
-        </div>
+        </table>
+        <button onclick="submit">Submit</button>
     </div>
     <script src="script.js"></script>
 </body>
