@@ -8,10 +8,10 @@ public class ServerEventTest
     @Test
     public void testGetGameId() 
     {
-        int expectedGameId = 123;
+        int expectedGameIdWget = 123;
         ServerEvent serverEvent = new ServerEvent();
-        serverEvent.setGameId(expectedGameId);
-        int actualGameId = serverEvent.getGameId();
-        assertEquals(expectedGameId, actualGameId);
+        serverEvent.setGameId(expectedGameIdWget);
+        int actualGameIdWget = serverEvent.getGameId();
+        assertEquals(expectedGameIdWget, actualGameIdWget);
     }
 }
