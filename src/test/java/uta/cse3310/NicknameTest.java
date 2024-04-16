@@ -26,7 +26,7 @@ class NicknameTest {
         // unique nickname
          Assertions.assertTrue(app.isNicknameUnique("Player3"));
 
-//         // non-unique nickname
-//         Assertions.assertFalse(app.isNicknameUnique("Player1"));
-//     }
-// }
+         // non-unique nickname
+         Assertions.assertFalse(app.isNicknameUnique("Player1"));
+     }
+ }
