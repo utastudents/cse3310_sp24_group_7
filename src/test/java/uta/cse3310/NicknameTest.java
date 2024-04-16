@@ -12,7 +12,6 @@ class NicknameTest {
      void setUp() {
        app = new App(9880);
      }
-
   @Test
      void testIsNicknameUnique() {
          // Create sample players
