@@ -12,7 +12,7 @@ function handleSubmission() {
     console.log("Submitting nickname to server: " + nickname);
 
     // Create a WebSocket connection to the server
-    socket = new WebSocket("ws://localhost:9880");
+    socket = new WebSocket("ws://" + window.location.hostname + ":9880");
 
     // Handle incoming messages from the server
     socket.onmessage = function(event) {
@@ -73,6 +73,8 @@ function startGame() {
         }
         gameTable.appendChild(row);
     }
+
+
 }
 
 // Function to handle button click on the game screen
