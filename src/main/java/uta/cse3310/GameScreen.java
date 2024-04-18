@@ -16,32 +16,13 @@ public class GameScreen {
 
 
 
-    public static char[][] generateRandomGrid(int rows, int cols) {
-        char[][] grid = new char[rows][cols];
-        Random rand = new Random();
-        for (int i = 0; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                grid[i][j] = (char) (rand.nextInt(26) + 'a'); // Generating random lowercase letters
-            }
-        }
-        return grid;
-    }
-
-    public static void printGrid(char[][] grid) {
-        for (int i = 0; i < grid.length; i++) {
-            for (int j = 0; j < grid[i].length; j++) // populates the columns
-            {
-                System.out.print(grid[i][j] + " "); // print an array
-            }
-            System.out.println(); // creates a new row
-        }
-    }
+    static WordGrid wordGrid = new WordGrid();
 
     public static void StartGame() 
     {
         System.out.println(gridString);
-        char[][] grid = generateRandomGrid(sizeOfArray, sizeOfArray);
-        printGrid(grid);
+        char[][] grid = wordGrid.generateRandomGrid(sizeOfArray, sizeOfArray);
+        wordGrid.printGrid(grid);
         // for (int i = 1; i <= 4; i++ )
         // {
         //     String s;
@@ -50,9 +31,6 @@ public class GameScreen {
         return;
     }
 
-    public void Update() {
-        return;
-    }
 
     public void CheckWord() {
         return;
