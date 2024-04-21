@@ -10,6 +10,7 @@ import java.util.Random;
 public class WordBank {
     private List<String> wordList;
     private Random random;
+    private ArrayList<String> wordBank;
 
 
     public WordBank() {
@@ -38,6 +39,7 @@ public class WordBank {
 
     public List<String> getWordList() {
         // Method to get the list of words in the word bank \\
+
         return wordList;
     }
 
@@ -55,6 +57,7 @@ public class WordBank {
         // Method to check if the selected word is in the word bank \\
         return wordList.contains(word);
     }
+   
     public static void main(String[] args) {
         // Create a WordBank instance
         WordBank wordBank = new WordBank();
