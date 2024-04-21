@@ -62,5 +62,24 @@ public class WordGrid{
         // Method for filling in the Grid w/ random letters \\
 		return grid;
 	}
-	
+    public char[][] generateRandomGrid(int rows, int cols) {
+        char[][] grid = new char[rows][cols];
+        Random rand = new Random();
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                grid[i][j] = (char) (rand.nextInt(26) + 'a'); // Generating random lowercase letters
+            }
+        }
+        return grid;
+    }
+
+    public void printGrid(char[][] grid) {
+        for (int i = 0; i < grid.length; i++) {
+            for (int j = 0; j < grid[i].length; j++) // populates the columns
+            {
+                System.out.print(grid[i][j] + " "); // print an array
+            }
+            System.out.println(); // creates a new row
+        }
+    }
 }
