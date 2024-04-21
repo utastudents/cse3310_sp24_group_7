@@ -16,7 +16,7 @@ public class GameScreen {
 
 
 
-    static WordGrid wordGrid = new WordGrid();
+    static WordGrid wordGrid = new WordGrid(sizeOfArray);
 
     public static void StartGame() 
     {
