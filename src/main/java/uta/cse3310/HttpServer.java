@@ -54,22 +54,3 @@ public class HttpServer {
     }
 
 }
-
-        System.out.println("in http server start");
-        try {
-            File dir = new File(dirname);
-            if (!dir.canRead())
-                throw new FileNotFoundException(dir.getAbsolutePath());
-
-            HTTPServer server = new HTTPServer(port);
-            VirtualHost host = server.getVirtualHost(null);
-            host.setAllowGeneratedIndex(true);
-            host.addContext("/", new FileContextHandler(dir));
-            server.start();
-            System.out.println("HTTPServer is listening on port " + port);
-        } catch (Exception e) 
-        {
-            System.err.println("error: " + e);
-        }
-    }
-}
