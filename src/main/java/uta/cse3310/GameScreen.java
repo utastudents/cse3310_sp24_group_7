@@ -23,7 +23,7 @@ public class GameScreen {
 
 
 
-    static WordGrid wordGrid = new WordGrid();
+    static WordGrid wordGrid = new WordGrid(656);
     GameScreen()
     {
         Button = new PlayerType[625];
@@ -118,7 +118,7 @@ public class GameScreen {
 
 
 
-    public double Timer() {
+    public void Timer() {
         Timer timer = new Timer();
         int delay = 1000; // 1 second
         int period = 1000; // 1 second
@@ -142,19 +142,19 @@ public class GameScreen {
         }, delay, period);
     }
     private boolean CheckLine(int i, int j, int k, PlayerType player) {
-        return player == Button[i] && player == Button[j] && player == Button[k];
+        return player == Button[i] && player == Button[j] && player == Button[k]; 
     }
 
     private boolean CheckHorizontal(PlayerType player) {
-        return CheckLine(0, 1, 2, player) | CheckLine(3, 4, 5, player) | CheckLine(6, 7, 8, player);
+        return CheckLine(0, 1, 2, player) | CheckLine(3, 4, 5, player) | CheckLine(6, 7, 8, player); //Needs to be changed
     }
 
     private boolean CheckVertical(PlayerType player) {
-        return CheckLine(0, 3, 6, player) | CheckLine(1, 4, 7, player) | CheckLine(2, 5, 8, player);
+        return CheckLine(0, 3, 6, player) | CheckLine(1, 4, 7, player) | CheckLine(2, 5, 8, player); //Needs to be changed
     }
 
     private boolean CheckDiagonal(PlayerType player) {
-        return CheckLine(0, 4, 8, player) | CheckLine(2, 4, 6, player);
+        return CheckLine(0, 4, 8, player) | CheckLine(2, 4, 6, player); // Needs to be changed
     }
 
     private boolean CheckBoard(PlayerType player) {
