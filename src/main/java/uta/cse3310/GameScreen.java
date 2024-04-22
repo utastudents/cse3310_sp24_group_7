@@ -12,6 +12,7 @@ public class GameScreen {
     public PlayerType[] Button;
 
     private String[] numOfUsers = {"User 1", "User 2", "User 3", "User 4"};
+    public int counter;
     public static boolean[] isUserActive;
     public static int index = 0;
     // public static boolean[] isUserActive = new boolean[numOfUsers.length];
@@ -91,7 +92,7 @@ public class GameScreen {
     }
 
 
-    public void CheckWord() {
+    public void CheckBoard() {
         return;
     }
 
@@ -115,13 +116,9 @@ public class GameScreen {
         return;
     }
 
-    public static void main(String[] args) 
-    {
-        Timer();
-        StartGame();
-    }
 
-    public static void Timer() {
+
+    public double Timer() {
         Timer timer = new Timer();
         int delay = 1000; // 1 second
         int period = 1000; // 1 second
@@ -136,12 +133,46 @@ public class GameScreen {
                 if (counter < 0) {
                     System.out.println("Time's up!");
                     index++;
+
                     counter = 30;
 
                     // timer.cancel(); // Terminate the timer when countdown is complete
                 }
             }
         }, delay, period);
+    }
+    private boolean CheckLine(int i, int j, int k, PlayerType player) {
+        return player == Button[i] && player == Button[j] && player == Button[k];
+    }
+
+    private boolean CheckHorizontal(PlayerType player) {
+        return CheckLine(0, 1, 2, player) | CheckLine(3, 4, 5, player) | CheckLine(6, 7, 8, player);
+    }
+
+    private boolean CheckVertical(PlayerType player) {
+        return CheckLine(0, 3, 6, player) | CheckLine(1, 4, 7, player) | CheckLine(2, 5, 8, player);
+    }
+
+    private boolean CheckDiagonal(PlayerType player) {
+        return CheckLine(0, 4, 8, player) | CheckLine(2, 4, 6, player);
+    }
+
+    private boolean CheckBoard(PlayerType player) {
+        return CheckHorizontal(player) | CheckVertical(player) | CheckDiagonal(player);
+    }
+    
+
+    private boolean CheckDraw(PlayerType player) {
+        // how to check for a draw?
+        // Are all buttons are taken ?
+        int count = 0;
+        for (int i = 0; i < Button.length; i++) {
+            if (Button[i] == PlayerType.NOUSER) {
+                count = count + 1;
+            }
+        }
+
+        return count == 0;
     }
     public void Update(UserEvent U) {
         System.out.println("The user event is " + U.PlayerIdx + "  " + U.Button + " " /* + U.ChatMsg*/);
@@ -192,7 +223,7 @@ public class GameScreen {
 
             // Check for winners, losers, and a draw
 
-            if (CheckWord(PlayerType.USER1)) //User 1 earns points
+            if (CheckBoard(PlayerType.USER1)) //User 1 earns points
             {
                 // gamesPlayed++;
                 // gamesWonAsX++;
@@ -201,7 +232,7 @@ public class GameScreen {
                 Msg[1] = "You Lose!";
                 CurrentTurn = PlayerType.NOUSER;
             } 
-            else if (CheckWord(PlayerType.USER2)) //User 2 earns points
+            else if (CheckBoard(PlayerType.USER2)) //User 2 earns points
             {
                 // gamesPlayed++;
                 // gamesWonAsY++;
@@ -210,7 +241,7 @@ public class GameScreen {
                 Msg[0] = "You Lose!";
                 CurrentTurn = PlayerType.NOUSER;
             } 
-            else if (CheckWord(PlayerType.USER3)) //User 3 earns points
+            else if (CheckBoard(PlayerType.USER3)) //User 3 earns points
             {
                 // gamesPlayed++;
                 // gamesWonAsY++;
@@ -219,7 +250,7 @@ public class GameScreen {
                 Msg[0] = "You Lose!";
                 CurrentTurn = PlayerType.NOUSER;
             } 
-            else if (CheckWord(PlayerType.USER4)) //User 4 earns points
+            else if (CheckBoard(PlayerType.USER4)) //User 4 earns points
             {
                 // gamesPlayed++;
                 // gamesWonAsY++;
