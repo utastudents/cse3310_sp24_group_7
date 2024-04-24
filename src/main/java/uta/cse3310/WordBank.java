@@ -47,18 +47,15 @@ public class WordBank {
 
         int overlapCount = 0;
         boolean overlapLetter = false;
-        // System.out.println("test");
         while (overlapCount < 5) { // Continue generating grid until at least 5 words are overlapped
             wordsPlaced.clear();
             for (String word : wordList) {
                 boolean wordPlaced = false;
                 int attempts = 0;
                 while (!wordPlaced && attempts < 10) {
-                    System.out.println("test" + attempts);
                     int row = random.nextInt(rows);
                     int col = random.nextInt(cols);
-                    int direction = random.nextInt(4); // 0: vertical, 1: horizontal, 2: reverse vertical, 3: reverse
-                                                       // horizontal
+                    int direction = random.nextInt(4); // 0: vertical, 1: horizontal, 2: reverse vertical, 3: reverse horizontal
 
                     if (direction == 0 && row + word.length() <= rows) {
                         boolean fits = true;
@@ -168,6 +165,9 @@ public class WordBank {
         for (String word : wordsPlaced) {
             System.out.println(word);
         }
+
+        fillEmptyCells(rows, cols);
+        printGrid();
     }
 
     public void printGrid() {
@@ -180,6 +180,17 @@ public class WordBank {
                 System.out.print(grid[i][j] + " ");
             }
             System.out.println();
+        }
+    }
+
+    private void fillEmptyCells(int rows, int cols) {
+        Random random = new Random();
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (grid[i][j] == '.') {
+                    grid[i][j] = (char) (random.nextInt(26) + 'a');
+                }
+            }
         }
     }
 
