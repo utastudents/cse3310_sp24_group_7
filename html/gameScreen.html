@@ -3,53 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <br> <br>
     <title>TWSG Game Screen</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
     <div class="container">
+        <br> <br>
         <div class="title">Game Screen</div>
         <a href="index.html">Back to Main Lobby</a> 
-        <table id="gridTable"></table>
+            <table>
+    
+                <script>
+
+
+
+
+                    // Function to generate a random character
+                    function getRandomChar() {
+                        // Define the pool of characters from which to choose
+                        const chars = "abcdefghijklmnopqrstuvwxyz";
+                        // Generate a random index within the range of available characters
+                        const randomIndex = Math.floor(Math.random() * chars.length);
+                        // Return the randomly chosen character
+                        return chars.charAt(randomIndex);
+                    }
+                
+                
+
+                    for (let i = 0; i < 25; i++) {
+                        document.write("<tr>");
+                        for (let j = 0; j < 25; j++) {
+                            let index = i * 25 + j;
+                            // Generate a random character for each button
+                            let randomChar = getRandomChar();
+                            document.write(`<td><input type="button" value="${randomChar}" id="b${index}" onclick="buttonclick(${index})"></input></td>`);
+                        }
+                        document.write("</tr>");
+                    }
+
+                    function buttonclick(index) {
+    // Get the button element by its ID
+    let button = document.getElementById(`b${index}`);
+    
+    // Toggle the highlight class
+    button.classList.toggle('highlight');
+    
+    // Other actions you want to perform upon button click
+    // For example, sending the button index to the server
+    U = new UserEvent();
+    U.Button = index;
+    if (idx == 0)
+        User.GameId = gameid;
+    connection.send(JSON.stringify(U));
+    console.log(JSON.stringify(U));
+}
+
+
+
+                </script>
+            </table>
+
+
+          <!--<button onclick="submit">Submit</button> -->
+        <!-- </a> -->
     </div>
-    <script>
-        // Function to generate a random character
-        function getRandomChar() {
-            const chars = "abcdefghijklmnopqrstuvwxyz";
-            const randomIndex = Math.floor(Math.random() * chars.length);
-            return chars.charAt(randomIndex);
-        }
-
-        let selectedLetters = [];
-
-        function buttonclick(index) {
-            let button = document.getElementById(`b${index}`);
-            button.classList.toggle('highlight');
-            
-            // Add or remove the selected letter from the array
-            let char = button.value;
-            let idx = selectedLetters.indexOf(char);
-            if (idx === -1) {
-                selectedLetters.push(char);
-            } else {
-                selectedLetters.splice(idx, 1);
-            }
-
-            // Display the selected letters in the console
-            console.log("Selected Letters:", selectedLetters);
-        }
-
-        // Generate grid table
-        let gridTable = document.getElementById("gridTable");
-        for (let i = 0; i < 25; i++) {
-            let row = gridTable.insertRow();
-            for (let j = 0; j < 25; j++) {
-                let cell = row.insertCell();
-                let index = i * 25 + j;
-                let randomChar = getRandomChar();
-                cell.innerHTML = `<input type="button" value="${randomChar}" id="b${index}" onclick="buttonclick(${index})"></input>`;
-            }
-        }
-    </script>
+    <script src="script.js"></script>
 </body>
+
 </html>

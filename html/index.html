@@ -1,31 +1,112 @@
+<!---
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TWSG Entry Screen</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TWSG Entry Screen</title>
+    <link rel="stylesheet" href="style.css">
 </head>
+<label id="topMessage"></label>
 <body>
-  <div class="container" id="main-container">
-    <div class="nickname-form" id="nickname-form">
-      <h1 class="main-heading">Welcome to The Word Search Game!</h1>
-      <label for="nickname">Enter Your Nickname:</label>
-      <input type="text" id="nickname" name="nickname">
-      <button id="submit" class="custom-button">Submit</button>
+    <div class="container">
+        <div class="title">Welcome to The Word Search Game</div>
+        <div class="nickname-form">
+            <label for="nickname">Enter Your Nickname:</label>
+            <input type="text" id="nickname" name="nickname">
+            <a href="gameScreen.html">
+            <button onclick="submit">Submit</button>
+            </a>
+
+            <script>
+                func
+            </script>
+        </div>
     </div>
-    <div id="lobby" style="display: none;">
-      <h2 class="main-heading">Lobby Screen</h2>
-      <p>Lobby Contents Here</p>
-      <button id="startGameButton" class="custom-button" onclick="startGame()">Start Game</button>
-    </div>
-    <div id="gameScreen" style="display: none;">
-      <h1 class="main-heading">Game Screen</h1>
-      <a href="#" onclick="showLobbyScreen()">Back to Main Lobby</a>
-      <table id="gameTable"></table>
-      <button onclick="submit()" class="custom-button">Submit</button>
-    </div>
-  </div>
-  <script src="script.js"></script>
+    <script src="script.js"></script>
 </body>
 </html>
+
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Word Search</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <!-- Entry Screen -->
+    <div id="entryScreen" class="container">
+      <div class="title">Welcome to The Word Search Game</div>
+      <div class="nickname-form">
+          <label for="nickname">Enter Your Nickname:</label>
+          <input type="text" id="nickname" name="nickname">
+          <button onclick="handleSubmission()">Submit</button> <!-- Updated onclick attribute -->
+      </div>
+  </div>
+  
+
+    <!-- Game Screen -->
+    <div id="gameScreen" class="container" style="display: none;">
+        <div class="title">Game Screen</div>
+        <a href="#" id="backToLobby">Back to Main Lobby</a> <!-- Update this link as needed -->
+        <table id="gameTable">
+
+        <script>
+
+            
+            function getRandomChar() {
+                        
+                        const chars = "abcdefghijklmnopqrstuvwxyz";
+                        
+                        const randomIndex = Math.floor(Math.random() * chars.length);
+                        
+                        return chars.charAt(randomIndex);
+                    }
+                
+                
+
+                    for (let i = 0; i < 25; i++) {
+                        document.write("<tr>");
+                        for (let j = 0; j < 25; j++) {
+                            let index = i * 25 + j;
+                           
+                            let randomChar = getRandomChar();
+                            document.write(`<td><input type="button" value="${randomChar}" id="b${index}" onclick="buttonclick(${index})"></input></td>`);
+                        }
+                        document.write("</tr>");
+                    }
+
+                    function buttonclick(index) {
+    
+    let button = document.getElementById(`b${index}`);
+    
+    
+    button.classList.toggle('highlight');
+    
+   
+    U = new UserEvent();
+    U.Button = index;
+    if (idx == 0)
+        User.GameId = gameid;
+    connection.send(JSON.stringify(U));
+    console.log(JSON.stringify(U));
+}
+
+        </script>
+        </table>
+
+        <button onclick="submit">Submit</button>
+      </a>
+
+
+
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
+
