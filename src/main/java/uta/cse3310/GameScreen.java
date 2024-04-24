@@ -56,30 +56,36 @@ public class GameScreen {
     public void TurnSystem()
     {
         int j;
-        if (isUserActive[0] == true)
+        //Player 1's turn
+        if (isUserActive[0] == true && counter <= 0)
         {
             for (int i = 1; i < isUserActive.length; i++)
             {
                 isUserActive[i] = false;
             }
         }
-        else if (isUserActive[1] == true)
+        //Player 2's turn
+        else if (isUserActive[1] == true && counter <= 0)
         {
             for (int i = 2; i < isUserActive.length; i++)
             {
-                isUserActive[0] = false;
                 isUserActive[i] = false;
             }
+            isUserActive[0] = false;
         }
-        else if (isUserActive[2] = true)
+        //Player 3's turn
+        else if (isUserActive[2] = true && counter <= 0)
         {
             for (int i = 2; i < isUserActive.length; i++)
             {
-                isUserActive[0] = false;
                 isUserActive[i] = false;
             }
+            isUserActive[0] = false;
+            isUserActive[1] = false;
+
         }
-        else if (isUserActive[3] = true)
+        //Player 4's turn
+        else if (isUserActive[3] = true && counter <= 0)
         {
             for (int i = 3; i < isUserActive.length; i++)
             {
