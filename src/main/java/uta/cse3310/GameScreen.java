@@ -157,23 +157,24 @@ public class GameScreen {
         return CheckLine(0, 4, 8, player) | CheckLine(2, 4, 6, player); // Needs to be changed
     }
 
-    private boolean CheckBoard(PlayerType player) {
+    private boolean CheckBoard(PlayerType player) 
+    {
         return CheckHorizontal(player) | CheckVertical(player) | CheckDiagonal(player);
     }
     
+    // Might be obsolete. NO Wins or Lose Senario.
+    // private boolean CheckDraw(PlayerType player) {
+    //     // how to check for a draw?
+    //     // Are all buttons are taken ?
+    //     int count = 0;
+    //     for (int i = 0; i < Button.length; i++) {
+    //         if (Button[i] == PlayerType.NOUSER) {
+    //             count = count + 1;
+    //         }
+    //     }
 
-    private boolean CheckDraw(PlayerType player) {
-        // how to check for a draw?
-        // Are all buttons are taken ?
-        int count = 0;
-        for (int i = 0; i < Button.length; i++) {
-            if (Button[i] == PlayerType.NOUSER) {
-                count = count + 1;
-            }
-        }
-
-        return count == 0;
-    }
+        // return count == 0;
+    //}
     public void Update(UserEvent U) {
         System.out.println("The user event is " + U.PlayerIdx + "  " + U.Button + " " /* + U.ChatMsg*/);
         // chatBox.setMessageSent(false);
@@ -228,7 +229,7 @@ public class GameScreen {
                 // gamesPlayed++;
                 // gamesWonAsX++;
                 // concurrentGames--;
-                Msg[0] = "You Win!";
+                Msg[0] = "User 2 earns points!";
                 Msg[1] = "You Lose!";
                 CurrentTurn = PlayerType.NOUSER;
             } 
@@ -237,7 +238,7 @@ public class GameScreen {
                 // gamesPlayed++;
                 // gamesWonAsY++;
                 // concurrentGames--;
-                Msg[1] = "You Win!";
+                Msg[1] = "User 2 earns points";
                 Msg[0] = "You Lose!";
                 CurrentTurn = PlayerType.NOUSER;
             } 
@@ -246,7 +247,7 @@ public class GameScreen {
                 // gamesPlayed++;
                 // gamesWonAsY++;
                 // concurrentGames--;
-                Msg[1] = "You Win!";
+                Msg[1] = "User 3 earns points";
                 Msg[0] = "You Lose!";
                 CurrentTurn = PlayerType.NOUSER;
             } 
@@ -255,18 +256,10 @@ public class GameScreen {
                 // gamesPlayed++;
                 // gamesWonAsY++;
                 // concurrentGames--;
-                Msg[1] = "You Win!";
+                Msg[1] = "User 4 earned points!";
                 Msg[0] = "You Lose!";
                 CurrentTurn = PlayerType.NOUSER;
             } 
-            else if (CheckDraw(U.PlayerIdx)) {
-                // gamesPlayed++;
-                // gamesDrawn++;
-                // concurrentGames--;
-                Msg[0] = "Draw";
-                Msg[1] = "Draw";
-                CurrentTurn = PlayerType.NOUSER;
-            }
         }
     }
 
@@ -280,5 +273,6 @@ public class GameScreen {
     //     return chatBox;
     // }
 }
+
 
 
