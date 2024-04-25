@@ -55,9 +55,11 @@ public class WordBank {
                 while (!wordPlaced && attempts < 10) {
                     int row = random.nextInt(rows);
                     int col = random.nextInt(cols);
-                    int direction = random.nextInt(4); // 0: vertical, 1: horizontal, 2: reverse vertical, 3: reverse horizontal
+                    int direction = random.nextInt(5); // 0: vertical, 1: horizontal, 2: reverse vertical, 3: reverse
+                                                       // horizontal, 4: diagonal down-right
 
                     if (direction == 0 && row + word.length() <= rows) {
+                        // Vertical placement
                         boolean fits = true;
                         overlapLetter = false;
                         for (int i = 0; i < word.length(); i++) {
@@ -80,6 +82,7 @@ public class WordBank {
                             }
                         }
                     } else if (direction == 1 && col + word.length() <= cols) {
+                        // Horizontal placement
                         boolean fits = true;
                         overlapLetter = false;
                         for (int i = 0; i < word.length(); i++) {
@@ -143,6 +146,29 @@ public class WordBank {
                             }
                             wordPlaced = true;
                             wordsPlaced.add(word);
+                            if (overlapLetter) {
+                                overlapCount++;
+                            }
+                        }
+                    } else if (direction == 4 && row + word.length() <= rows && col + word.length() <= cols) {
+                        // Diagonal down-right placement
+                        boolean fits = true;
+                        overlapLetter = false;
+                        for (int i = 0; i < word.length(); i++) {
+                            if (grid[row + i][col + i] != '.' && grid[row + i][col + i] != word.charAt(i)) {
+                                fits = false;
+                                break;
+                            }
+                            if (grid[row + i][col + i] == word.charAt(i)) {
+                                overlapLetter = true;
+                            }
+                        }
+                        if (fits) {
+                            for (int i = 0; i < word.length(); i++) {
+                                grid[row + i][col + i] = word.charAt(i);
+                            }
+                            wordPlaced = true;
+                            wordsPlaced.add(word); // Add the successfully placed word to wordsPlaced list
                             if (overlapLetter) {
                                 overlapCount++;
                             }
