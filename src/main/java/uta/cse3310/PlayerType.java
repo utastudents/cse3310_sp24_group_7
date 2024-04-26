@@ -1,35 +1,7 @@
 package uta.cse3310;
-import org.java_websocket.WebSocket;
 
+// A player can be an X or an O
 
-public enum PlayerType
-{
-  USER1, USER2, USER3, USER4, NOUSER
+public enum PlayerType {
+    NOPLAYER, XPLAYER, OPLAYER, PLAYER1, PLAYER2, PLAYER3, PLAYER4 //P0 is what a player gets before being assigned a real player type
 }
-// public class PlayerType 
-// {
-//   public String name;
-//   public int score;
-//   public int index;
-//   public int gameNum;
-//   public boolean isReady;
-//   public WebSocket playerConn;
-  
-//   PlayerType(String name, WebSocket playerConn){
-//     this.name = name;
-//     this.isReady = false;
-//     this.playerConn = playerConn;
-//     this.score = 0;
-//   }
-
-//   // Getter for Player Name
-//   public String getName() {
-//     return this.name;
-//   }
-
-//   // Getter for playerConn
-//   public WebSocket getPlayerConn() {
-//     return this.playerConn;
-// }
-// }
-    
