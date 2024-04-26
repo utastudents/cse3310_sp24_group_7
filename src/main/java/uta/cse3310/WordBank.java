@@ -1,4 +1,4 @@
-package uta.cse3310;
+//package uta.cse3310;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -12,6 +12,8 @@ public class WordBank {
     private char[][] grid;
     private List<String> wordsPlaced; // To store words successfully placed in the grid
     private Random random;
+    //private List<WordLocation> wordLocation;                  This is causing errors
+    //private int[] start
 
     public WordBank() {
         wordList = new ArrayList<>();
@@ -47,6 +49,8 @@ public class WordBank {
 
         int overlapCount = 0;
         boolean overlapLetter = false;
+        int[] start = new int[2];
+        int[] end = new int[2];
         while (overlapCount < 5) { // Continue generating grid until at least 5 words are overlapped
             wordsPlaced.clear();
             for (String word : wordList) {
@@ -55,11 +59,17 @@ public class WordBank {
                 while (!wordPlaced && attempts < 10) {
                     int row = random.nextInt(rows);
                     int col = random.nextInt(cols);
-                    int direction = random.nextInt(5); // 0: vertical, 1: horizontal, 2: reverse vertical, 3: reverse
-                                                       // horizontal, 4: diagonal down-right
+
+                    start[0] = row;
+                    start[1] = col;
+                    
+                    int direction = random.nextInt(5); // 0: vertical, 1: horizontal, 2: reverse vertical, 3: reverse horizontal, 4: diagonal down-right
 
                     if (direction == 0 && row + word.length() <= rows) {
                         // Vertical placement
+                        end[0] = row+word.length();
+                        end[1] = col;
+
                         boolean fits = true;
                         overlapLetter = false;
                         for (int i = 0; i < word.length(); i++) {
@@ -80,9 +90,13 @@ public class WordBank {
                             if (overlapLetter) {
                                 overlapCount++;
                             }
+                            //ArrayList.add(new wordLocation(word,start,end,direction));     This is causing errors 
                         }
                     } else if (direction == 1 && col + word.length() <= cols) {
                         // Horizontal placement
+                        end[0] = row;
+                        end[1] = col+word.length();
+
                         boolean fits = true;
                         overlapLetter = false;
                         for (int i = 0; i < word.length(); i++) {
@@ -103,9 +117,13 @@ public class WordBank {
                             if (overlapLetter) {
                                 overlapCount++;
                             }
+                            //ArrayList.add(new wordLocation(word,start,end,direction));     This is causing errors 
                         }
                     } else if (direction == 2 && row - word.length() >= -1) {
                         // Reverse vertical placement
+                        end[0] = row-word.length();
+                        end[1] = col;
+
                         boolean fits = true;
                         overlapLetter = false;
                         for (int i = 0; i < word.length(); i++) {
@@ -126,9 +144,13 @@ public class WordBank {
                             if (overlapLetter) {
                                 overlapCount++;
                             }
+                            //ArrayList.add(new wordLocation(word,start,end,direction));     This is causing errors 
                         }
                     } else if (direction == 3 && col - word.length() >= -1) {
                         // Reverse horizontal placement
+                        end[0] = row;
+                        end[1] = col-word.length();
+
                         boolean fits = true;
                         overlapLetter = false;
                         for (int i = 0; i < word.length(); i++) {
@@ -149,9 +171,13 @@ public class WordBank {
                             if (overlapLetter) {
                                 overlapCount++;
                             }
+                            //ArrayList.add(new wordLocation(word,start,end,direction));     This is causing errors 
                         }
                     } else if (direction == 4 && row + word.length() <= rows && col + word.length() <= cols) {
                         // Diagonal down-right placement
+                        end[0] = row+word.length();
+                        end[1] = col+word.length();
+
                         boolean fits = true;
                         overlapLetter = false;
                         for (int i = 0; i < word.length(); i++) {
@@ -172,6 +198,7 @@ public class WordBank {
                             if (overlapLetter) {
                                 overlapCount++;
                             }
+                            //ArrayList.add(new wordLocation(word,start,end,direction));     This is causing errors 
                         }
                     }
                     attempts++;
@@ -194,6 +221,11 @@ public class WordBank {
 
         fillEmptyCells(rows, cols);
         printGrid();
+
+        System.out.println("Word Location:");
+        //for (String word : wordsPlaced) {                             //print for wordLocation after error is fixed 
+            //System.out.println(wordLocation);
+       // }
     }
 
     public void printGrid() {
