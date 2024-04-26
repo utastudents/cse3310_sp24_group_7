@@ -11,17 +11,16 @@ public class WordBank {
     private List<String> wordList;
     private char[][] grid;
     private List<String> wordsPlaced; // To store words successfully placed in the grid
-    private Random random;
     //private List<WordLocation> wordLocation;                  This is causing errors
     //private int[] start
 
     public WordBank() {
         wordList = new ArrayList<>();
         wordsPlaced = new ArrayList<>();
-        random = new Random();
     }
 
     public void addWordsFromFile(String fileName) {
+        Random random = new Random();
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
             while ((line = br.readLine()) != null) {
@@ -51,6 +50,7 @@ public class WordBank {
         boolean overlapLetter = false;
         int[] start = new int[2];
         int[] end = new int[2];
+        Random random = new Random();
         while (overlapCount < 5) { // Continue generating grid until at least 5 words are overlapped
             wordsPlaced.clear();
             for (String word : wordList) {
