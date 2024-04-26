@@ -121,6 +121,7 @@
         if(gameid == obj.GameId)
         {
           updateGrid(obj.wordBank.grid);
+          //updateLetters(obj.wordBank.pickedLetters);
         }
 
         if (obj.chatBox.messageSent == true && gameid == obj.GameId) {
@@ -181,6 +182,11 @@
       container.innerHTML = ''; // Clear previous table
       container.appendChild(table);
     }
+
+    function updateLetters(letters) {
+      
+    }
+
 
     function buttonclick(i, j) {
       U = new UserEvent();
