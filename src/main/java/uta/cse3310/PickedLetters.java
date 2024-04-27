@@ -12,5 +12,20 @@ public class PickedLetters {
          this.playerId = playerId;
     
     }
+
+    public int getRow()
+    {
+        return row;
+    }
+
+    public int getCol()
+    {
+        return col;
+    }
+
+    public PlayerType getPlayer()
+    {
+        return playerId;
+    }
     
 }

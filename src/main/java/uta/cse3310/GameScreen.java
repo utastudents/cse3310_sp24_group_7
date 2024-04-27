@@ -16,6 +16,8 @@ public class GameScreen {
     private List<PickedLetters> pickedLetters;
     public int[] start;
     public int[] end;
+    public int playersJoined;
+    public Scoreboard scoreBoard;
 
     GameScreen() {
         wordBank = new WordBank();
@@ -26,6 +28,7 @@ public class GameScreen {
         Msg = new String[2];
 
         chatBox = new ChatBox();
+        scoreBoard = new Scoreboard(2);
 
         pickedLetters = new ArrayList<>();
 
@@ -37,6 +40,8 @@ public class GameScreen {
 
         GridRow = -1;
         GridColumn = -1;
+
+        playersJoined = 0;
 
         start = new int[]{-1, -1};
         end = new int[]{-1, -1};
@@ -135,6 +140,7 @@ public class GameScreen {
                                 {
                                     pickedLetters.add(new PickedLetters(start[0]+j, start[1]+j, U.PlayerIdx));
                                 }
+                                scoreBoard.addScore(PlayerToIdx(U.PlayerIdx));
                             }
                             wordLocations.remove(i);
                             i = wordLocations.size();

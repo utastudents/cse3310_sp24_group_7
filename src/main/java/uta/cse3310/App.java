@@ -69,12 +69,14 @@ public class App extends WebSocketServer {
       GameId++;
       // Add the first player
       G.Players = uta.cse3310.PlayerType.XPLAYER;
+      G.playersJoined++;
       ActiveGames.add(G);
       System.out.println(" creating a new Game");
     } else {
       // join an existing game
       System.out.println(" not a new game");
       G.Players = uta.cse3310.PlayerType.OPLAYER;
+      G.playersJoined++;
       G.StartGame();
     }
     System.out.println("G.players is " + G.Players);
@@ -120,6 +122,7 @@ public class App extends WebSocketServer {
     // Get our Game Object
     GameScreen G = conn.getAttachment();
     G.Update(U);
+    G.playersJoined++;
 
     // send out the game state every time
     // to everyone

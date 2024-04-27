@@ -117,15 +117,21 @@
 
         gameid = obj.GameId;
       }
-      else{
-        if(gameid == obj.GameId)
+      else
+      {
+        if(gameid == obj.GameId && obj.playersJoined < 3)
         {
-          updateGrid(obj.wordBank.grid);
-          //updateLetters(obj.wordBank.pickedLetters);
+          generateGrid(obj.wordBank.grid);
         }
+        else
+        {
+          if(gameid == obj.GameId)
+          {
+            updateGrid(obj.pickedLetters);
+          }
 
-        if (obj.chatBox.messageSent == true && gameid == obj.GameId) {
-          var messages = obj.chatBox.messages;
+          if (obj.chatBox.messageSent == true && gameid == obj.GameId) {
+            var messages = obj.chatBox.messages;
             var lastMessage = messages[messages.length - 1]; // Get the last message from the messages array
             var messagesDiv = document.getElementById('messages');
             var messageElement = document.createElement('div');
@@ -139,29 +145,30 @@
               document.getElementById("topMessage").innerHTML = obj.Msg[idx];
             }
           }
-        }
+        }        
       }
+    }
 
-      function chat() {
-        U = new UserEvent();
-        U.Button = 9;
-        if (idx == 0)
-          U.PlayerIdx = "XPLAYER";
-        else
-          U.PlayerIdx = "OPLAYER";
-        U.GameId = gameid;
+    function chat() {
+      U = new UserEvent();
+      U.Button = 9;
+      if (idx == 0)
+        U.PlayerIdx = "XPLAYER";
+      else
+        U.PlayerIdx = "OPLAYER";
+      U.GameId = gameid;
 
-        var inputElement = document.getElementById('message');
-        var inputValue = inputElement.value;
-        U.Msg = inputValue;
-          document.getElementById('message').value = null;
-          console.log("test 2");
+      var inputElement = document.getElementById('message');
+      var inputValue = inputElement.value;
+      U.Msg = inputValue;
+      document.getElementById('message').value = null;
+      console.log("test 2");
 
-        connection.send(JSON.stringify(U));
-        console.log(JSON.stringify(U));
+      connection.send(JSON.stringify(U));
+      console.log(JSON.stringify(U));
     }  // Existing game UI update logic here
 
-    function updateGrid(grid) {
+    function generateGrid(grid) {
       var table = document.createElement('table');
       grid.forEach(function(row, rowIndex) {
         var tr = document.createElement('tr');
@@ -183,22 +190,40 @@
       container.appendChild(table);
     }
 
-    function updateLetters(letters) {
-      
+    function updateGrid(letters) {
+      letters.forEach(function (letter) {
+        var buttonElement = document.querySelector('table tr:nth-child(' + (letter.row + 1) + ') td:nth-child(' + (letter.col + 1) + ') button');
+        if (letter.playerId == 'XPLAYER') {
+          buttonElement.style.backgroundColor = 'yellow';
+        } else if (letter.playerId == 'OPLAYER') {
+          buttonElement.style.backgroundColor = 'green';
+        }
+      });
     }
+
 
 
     function buttonclick(i, j) {
       U = new UserEvent();
-        U.GridRow = i;
-        U.GridColumn = j;
-        if (idx == 0)
-          U.PlayerIdx = "XPLAYER";
-        else
-          U.PlayerIdx = "OPLAYER";
-        U.GameId = gameid;
+      U.GridRow = i;
+      U.GridColumn = j;
+      if (idx == 0)
+        U.PlayerIdx = "XPLAYER";
+      else
+        U.PlayerIdx = "OPLAYER";
+      U.GameId = gameid;
 
-        connection.send(JSON.stringify(U));
-        console.log(JSON.stringify(U));
+      var buttonElement = document.querySelector('table tr:nth-child(' + (i + 1) + ') td:nth-child(' + (j + 1) + ') button');
+
+      if(U.PlayerIdx == 'XPLAYER'){
+        buttonElement.style.backgroundColor = 'yellow';
+      }
+      else if(U.PlayerIdx == 'OPLAYER'){
+        buttonElement.style.backgroundColor = 'green';
+      }
+
+
+      connection.send(JSON.stringify(U));
+      console.log(JSON.stringify(U));
     }
   </script>
