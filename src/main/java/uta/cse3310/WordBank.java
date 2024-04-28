@@ -15,12 +15,11 @@ public class WordBank {
     //private int[] start
 
     public WordBank() {
-        wordList = new ArrayList<>();
         wordsPlaced = new ArrayList<>();
         wordLocations = new ArrayList<>();
     }
 
-    public void addWordsFromFile(String fileName) {
+    public void addWordsFromFile(String fileName, List<String> wordList) {
         Random random = new Random();
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
@@ -34,7 +33,7 @@ public class WordBank {
         }
     }
 
-    public void generateGrid(int rows, int cols) {
+    public void generateGrid(int rows, int cols, List<String> wordList) {
         if (wordList.isEmpty()) {
             System.out.println("Word list is empty. Please add words before generating the grid.");
             return;
@@ -243,9 +242,9 @@ public class WordBank {
         // }
 
         fillEmptyCells(rows, cols);
-        printGrid();
+        //printGrid();
 
-        System.out.println("Word Location:");
+        //System.out.println("Word Location:");
         //for (String word : wordsPlaced) {                             //print for wordLocation after error is fixed 
             //System.out.println(wordLocation);
        // }
@@ -275,22 +274,22 @@ public class WordBank {
         }
     }
 
-    public List<String> getWordList() {
-        return wordList;
-    }
+    // public List<String> getWordList() {
+    //     return wordList;
+    // }
 
-    public String getRandomWord() {
-        // Return a random word from wordList
-        return null;
-    }
+    // public String getRandomWord() {
+    //     // Return a random word from wordList
+    //     return null;
+    // }
 
-    public boolean containsWord(String word) {
-        return wordList.contains(word);
-    }
+    // public boolean containsWord(String word) {
+    //     return wordList.contains(word);
+    // }
 
-    public boolean isValidWord(String word) {
-        return wordList.contains(word);
-    }
+    // public boolean isValidWord(String word) {
+    //     return wordList.contains(word);
+    // }
 
     private void clearGrid() {
         for (int i = 0; i < grid.length; i++) {
@@ -300,11 +299,11 @@ public class WordBank {
         }
     }
 
-    public static void main(String[] args) {
-        WordBank wordBank = new WordBank();
-        wordBank.addWordsFromFile("words.txt");
-        wordBank.generateGrid(25, 25);
-    }
+    // public static void main(String[] args) {
+    //     WordBank wordBank = new WordBank();
+    //     wordBank.addWordsFromFile("words.txt");
+    //     wordBank.generateGrid(25, 25);
+    // }
 
     public List<WordLocation> getWordLocations()
     {

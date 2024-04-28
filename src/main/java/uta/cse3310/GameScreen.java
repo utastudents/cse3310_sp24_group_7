@@ -23,10 +23,9 @@ public class GameScreen {
         // Created by Abubakar Kassim
         this.players = new ArrayList<PlayerType>();
 
-        wordBank = new WordBank();
-        wordBank.addWordsFromFile("words.txt");
-        wordBank.generateGrid(25, 25);
-        wordBank.printGrid();
+        wordBank = new WordBank();List<String> wordList = new ArrayList<>();
+        wordBank.addWordsFromFile("words.txt", wordList);
+        wordBank.generateGrid(25, 25, wordList);
 
         chatBox = new ChatBox();
         scoreBoard = new Scoreboard(4);
@@ -34,7 +33,6 @@ public class GameScreen {
         pickedLetters = new ArrayList<>();
 
         Players = PlayerType.XPLAYER;
-        CurrentTurn = PlayerType.NOPLAYER;
 
         playersJoined = 0;
 
