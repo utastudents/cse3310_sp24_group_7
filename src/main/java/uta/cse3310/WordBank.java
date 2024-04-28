@@ -309,4 +309,9 @@ public class WordBank {
     {
         return wordLocations;
     }
+
+    public List<String> getWordsPlaced()
+    {
+        return wordsPlaced;
+    }
 }
