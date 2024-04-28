@@ -1,10 +1,7 @@
 package uta.cse3310;
 
-import org.java_websocket.WebSocket;
 import java.util.ArrayList;
 import java.util.List;
-import com.google.gson.Gson;
-
 
 public class ChatBox {
     private List<String> messages = new ArrayList<>();
@@ -14,9 +11,14 @@ public class ChatBox {
     public void addMessage(String message) {
         messages.add(message);
     }
+    
+    // Method to get the list of messages
+    public List<String> getMessages() {
+        return messages;
+    }
 
-    public void setMessageSent(boolean ms)
-    {
+    // Method to set if a message is sent or not
+    public void setMessageSent(boolean ms) {
         messageSent = ms;
     }
 }

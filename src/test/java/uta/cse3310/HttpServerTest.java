@@ -1,5 +1,9 @@
-package uta.cse3310;/*
+package uta.cse3310;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.assertTrue;
+import static org.mockito.Mockito.times;
+
 import org.junit.Test;
 
 public class HttpServerTest 
@@ -14,4 +18,14 @@ public class HttpServerTest
         httpServer.start();
         assertNotNull(httpServer);
     }
-}*/
+    @Test
+    public void testServerTime()
+    {
+        long startTime = System.currentTimeMillis();
+        startTheTestServer();
+        long endTime = System.currentTimeMillis();
+        long timeElapsed = endTime - startTime; // Should be less than 2 seconds.
+
+        assertTrue(timeElapsed <= 2000);
+    }
+}
