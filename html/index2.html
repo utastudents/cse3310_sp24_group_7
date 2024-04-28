@@ -59,6 +59,9 @@
     }
     var connection = null;
 
+    let start = [-1, -1];
+    let end = [-1, -1];
+
     var serverUrl;
     serverUrl = "ws://" + window.location.hostname + ":9880";
     // Create the connection with the server
@@ -170,6 +173,15 @@
     }
 
     function updateGrid(letters) {
+      if(start[0] != -1 && end[0] != -1)
+      {
+        var buttonElementStart = document.querySelector('table tr:nth-child(' + (start[0] + 1) + ') td:nth-child(' + (start[1] + 1) + ') button');
+        var buttonElementEnd = document.querySelector('table tr:nth-child(' + (end[0] + 1) + ') td:nth-child(' + (end[1] + 1) + ') button');
+        buttonElementStart.style.backgroundColor = '';
+        buttonElementEnd.style.backgroundColor = '';
+        start = [-1, -1];
+        end = [-1, -1];
+      }
       letters.forEach(function (letter) {
         var buttonElement = document.querySelector('table tr:nth-child(' + (letter.row + 1) + ') td:nth-child(' + (letter.col + 1) + ') button');
         if (letter.playerId == 'XPLAYER') {
@@ -223,14 +235,34 @@ function buttonclick(i, j) {
     U.PlayerIdx = "OPLAYER";
   U.GameId = gameid;
 
-  var buttonElement = document.querySelector('table tr:nth-child(' + (i + 1) + ') td:nth-child(' + (j + 1) + ') button');
+  if(start[0] == -1)
+  {
+    var buttonElement = document.querySelector('table tr:nth-child(' + (i + 1) + ') td:nth-child(' + (j + 1) + ') button');
 
-  if(U.PlayerIdx == 'XPLAYER'){
-    buttonElement.style.backgroundColor = 'yellow';
+    if(U.PlayerIdx == 'XPLAYER'){
+      buttonElement.style.backgroundColor = 'yellow';
+    }
+    else if(U.PlayerIdx == 'OPLAYER'){
+      buttonElement.style.backgroundColor = 'green';
+    }
+    start[0] = i;
+    start[1] = j;
   }
-  else if(U.PlayerIdx == 'OPLAYER'){
-    buttonElement.style.backgroundColor = 'green';
+  else if(end[0] == -1)
+  {
+    var buttonElement = document.querySelector('table tr:nth-child(' + (i + 1) + ') td:nth-child(' + (j + 1) + ') button');
+
+    if(U.PlayerIdx == 'XPLAYER'){
+      buttonElement.style.backgroundColor = 'yellow';
+    }
+    else if(U.PlayerIdx == 'OPLAYER'){
+      buttonElement.style.backgroundColor = 'green';
+    }
+
+    end[0] = i;
+    end[1] = j;
   }
+  
 
 
   connection.send(JSON.stringify(U));
