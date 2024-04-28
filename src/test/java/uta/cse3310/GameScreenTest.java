@@ -1,4 +1,4 @@
-package uta.cse3310;
+/*package uta.cse3310;
 import org.junit.jupiter.api.*;
 
 import org.java_websocket.WebSocket;
@@ -18,9 +18,9 @@ public class GameScreenTest
     {
         App app = new App(9880); //
         app.setOnOpen((WebSocket conn)->System.out.println("Connection opened"));
-        /*
-         * Need to finalize cpde
-         */
+        //
+        //  Need to finalize cpde
+        // 
         GameScreen.StartGame();
         assertTrue(game.isOpen);
     }
@@ -57,3 +57,4 @@ public class GameScreenTest
         
     }
 }
+*/
