@@ -2,6 +2,8 @@ package uta.cse3310;
 import java.util.ArrayList;
 import java.util.List;
 
+//known bugs
+//while one player has a letter selected, the other player cannot score any words
 
 public class GameScreen {
     public PlayerType Players;
@@ -23,7 +25,8 @@ public class GameScreen {
         // Created by Abubakar Kassim
         this.players = new ArrayList<PlayerType>();
 
-        wordBank = new WordBank();List<String> wordList = new ArrayList<>();
+        wordBank = new WordBank();
+        List<String> wordList = new ArrayList<>();
         wordBank.addWordsFromFile("words.txt", wordList);
         wordBank.generateGrid(25, 25, wordList);
 
