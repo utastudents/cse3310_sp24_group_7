@@ -2,22 +2,19 @@ package uta.cse3310;
 import java.util.ArrayList;
 import java.util.List;
 
+//known bugs
+//while one player has a letter selected, the other player cannot score any words
 
 public class GameScreen {
     public PlayerType Players;
-    public PlayerType CurrentTurn;
-    public PlayerType[] Button;
-    public int GridRow;
-    public int GridColumn;
-    public String[] Msg;
     public int GameId;
     private ChatBox chatBox;
     private WordBank wordBank;
     private List<PickedLetters> pickedLetters;
+    public Scoreboard scoreBoard;
     public int[] start;
     public int[] end;
     public int playersJoined;
-    public Scoreboard scoreBoard;
 
     //Created by Abubakar Kassim
     public ArrayList<PlayerType> players;
@@ -29,11 +26,9 @@ public class GameScreen {
         this.players = new ArrayList<PlayerType>();
 
         wordBank = new WordBank();
-        wordBank.addWordsFromFile("words.txt");
-        wordBank.generateGrid(25, 25);
-        wordBank.printGrid();
-
-        Msg = new String[2];
+        List<String> wordList = new ArrayList<>();
+        wordBank.addWordsFromFile("words.txt", wordList);
+        wordBank.generateGrid(25, 25, wordList);
 
         chatBox = new ChatBox();
         scoreBoard = new Scoreboard(4);
@@ -41,13 +36,6 @@ public class GameScreen {
         pickedLetters = new ArrayList<>();
 
         Players = PlayerType.XPLAYER;
-        CurrentTurn = PlayerType.NOPLAYER;
-
-        Msg[0] = "Waiting for other player to join";
-        Msg[1] = "";
-
-        GridRow = -1;
-        GridColumn = -1;
 
         playersJoined = 0;
 
@@ -55,17 +43,8 @@ public class GameScreen {
         end = new int[]{-1, -1};
     }
 
-    public String Hello()
-    {
-        String message = "Hello";
-        return message;
-    }
-
     public void StartGame() {
         // X player goes first. Because that is how it is.
-        Msg[0] = "You are X. Your turn";
-        Msg[1] = "Not your turn";
-        CurrentTurn = PlayerType.XPLAYER;
     }
 
     // This function returns an index for each player
