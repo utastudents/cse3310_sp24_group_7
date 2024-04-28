@@ -1,10 +1,12 @@
 package uta.cse3310;
 
 import static junit.framework.Assert.assertEquals;
+import org.junit.Test;
 
 public class AppTest {
 
     //Test Socket
+    @Test
     public void testWebSocketPort() {
 
         //Setexpected # for port
