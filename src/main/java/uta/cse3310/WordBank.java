@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Random;
 
 public class WordBank {
-    private List<String> wordList;
     private char[][] grid;
     private List<String> wordsPlaced; // To store words successfully placed in the grid
     private List<WordLocation> wordLocations;                  //This is causing errors
