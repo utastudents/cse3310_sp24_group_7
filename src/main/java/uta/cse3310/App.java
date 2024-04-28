@@ -30,7 +30,7 @@ import java.util.List; // Ensure List is also imported if it's used
 public class App extends WebSocketServer {
   // All games currently underway on this server are stored in
   // the vector ActiveGames
-  Vector<Game> ActiveGames = new Vector<Game>();
+  Vector<GameScreen> ActiveGames = new Vector<GameScreen>();
 
   int GameId = 1;
 
@@ -54,8 +54,8 @@ public class App extends WebSocketServer {
     ServerEvent E = new ServerEvent();
 
     // search for a game needing a player
-    Game G = null;
-    for (Game i : ActiveGames) {
+    GameScreen G = null;
+    for (GameScreen i : ActiveGames) {
       if (i.Players == uta.cse3310.PlayerType.XPLAYER) {
         G = i;
         System.out.println("found a match");
@@ -64,17 +64,28 @@ public class App extends WebSocketServer {
 
     // No matches ? Create a new Game.
     if (G == null) {
-      G = new Game();
+      G = new GameScreen();
       G.GameId = GameId;
       GameId++;
       // Add the first player
       G.Players = uta.cse3310.PlayerType.XPLAYER;
+      G.playersJoined++;
       ActiveGames.add(G);
       System.out.println(" creating a new Game");
     } else {
       // join an existing game
       System.out.println(" not a new game");
-      G.Players = uta.cse3310.PlayerType.OPLAYER;
+    // join an existing game
+    System.out.println(" not a new game");
+    if (G.playersJoined == 1) {
+        G.Players = uta.cse3310.PlayerType.OPLAYER;
+    } else if (G.playersJoined == 2) {
+        G.Players = uta.cse3310.PlayerType.PLAYER3;
+    } else if (G.playersJoined == 3) {
+        G.Players = uta.cse3310.PlayerType.PLAYER4;
+    }
+
+      G.playersJoined++;
       G.StartGame();
     }
     System.out.println("G.players is " + G.Players);
@@ -102,13 +113,13 @@ public class App extends WebSocketServer {
   public void onClose(WebSocket conn, int code, String reason, boolean remote) {
     System.out.println(conn + " has closed");
     // Retrieve the game tied to the websocket connection
-    Game G = conn.getAttachment();
+    GameScreen G = conn.getAttachment();
     G = null;
   }
 
   @Override
   public void onMessage(WebSocket conn, String message) {
-    System.out.println(conn + ": " + message);
+    // System.out.println(conn + ": " + message);
 
     // Bring in the data from the webpage
     // A UserEvent is all that is allowed at this point
@@ -118,15 +129,16 @@ public class App extends WebSocketServer {
     System.out.println(U.Button);
 
     // Get our Game Object
-    Game G = conn.getAttachment();
+    GameScreen G = conn.getAttachment();
     G.Update(U);
+    G.playersJoined++;
 
     // send out the game state every time
     // to everyone
     String jsonString;
     jsonString = gson.toJson(G);
 
-    System.out.println(jsonString);
+    // System.out.println(jsonString);
     broadcast(jsonString);
   }
 

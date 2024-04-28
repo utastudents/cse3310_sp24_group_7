@@ -1,4 +1,4 @@
-package uta.cse3310;
+package uta.cse3310;/*
 import java.util.ArrayList;
 
 public class LobbyScreen 
@@ -64,7 +64,7 @@ public class LobbyScreen
          * displayMessage("RSG", "Nice Score"):
          * EX: RSG: Nice Score
          */
-    }
+    /*}
 
     public void updateLobby(ArrayList<PlayerType> playerList){
          // Clear previous lobby state
@@ -85,3 +85,4 @@ public class LobbyScreen
       }
 }
 }
+*/

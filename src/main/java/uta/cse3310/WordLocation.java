@@ -2,14 +2,19 @@ package uta.cse3310;
 
 public class WordLocation {
     private String word;
-    private int[] start;
-    private int[] end;
+    private int startRow;
+    private int startCol;
+    private int endRow;
+    private int endCol;
     private int direction;
 
-    public WordLocation(String word, int[] start, int[] end, int direction) {
+    public WordLocation(String word, int startRow, int startCol, int endRow, int endCol, int direction) {
         this.word = word;
-        this.start = start;
-        this.end = end;
+        this.startRow = startRow;
+        this.startCol = startCol;
+        this.endRow = endRow;
+        this.endCol = endCol;
+
         this.direction = direction;
     }
 
@@ -22,20 +27,36 @@ public class WordLocation {
         this.word = word;
     }
 
-    public int[] getStart() {
-        return start;
+    public int getStartRow() {
+        return startRow;
     }
 
-    public void setStart(int[] start) {
-        this.start = start;
+    public void setStartRow(int startRow) {
+        this.startRow = startRow;
     }
 
-    public int[] getEnd() {
-        return end;
+    public int getStartCol() {
+        return startCol;
     }
 
-    public void setEnd(int[] end) {
-        this.end = end;
+    public void setStartCol(int startCol) {
+        this.startCol = startCol;
+    }
+
+    public int getEndRow() {
+        return endRow;
+    }
+
+    public void setEndRow(int endRow) {
+        this.endRow = endRow;
+    }
+
+    public int getEndCol() {
+        return endCol;
+    }
+
+    public void setEndCol(int endCol) {
+        this.endCol = endCol;
     }
 
     public int getDirection() {

@@ -1,130 +1,97 @@
 package uta.cse3310;
+import java.util.ArrayList;
+import java.util.List;
 
-import java.util.Random;
-import java.util.*;
+
 public class GameScreen {
-
-    public String[] Msg;
-    public int GameId;
-    public boolean isOpen;
     public PlayerType Players;
     public PlayerType CurrentTurn;
     public PlayerType[] Button;
+    public int GridRow;
+    public int GridColumn;
+    public String[] Msg;
+    public int GameId;
+    private ChatBox chatBox;
+    private WordBank wordBank;
+    private List<PickedLetters> pickedLetters;
+    public int[] start;
+    public int[] end;
+    public int playersJoined;
+    public Scoreboard scoreBoard;
 
-    private String[] numOfUsers = {"User 1", "User 2", "User 3", "User 4"};
-    public int counter;
-    public static boolean[] isUserActive;
-    public static int index = 0;
-    // public static boolean[] isUserActive = new boolean[numOfUsers.length];
-    private static String gridString = "GRID:";
-    private static String chat = "Chat:";
+    //Created by Abubakar Kassim
+    public ArrayList<PlayerType> players;
+    public boolean[] playerIsPlaying = new boolean[4]; // Need to implement to enter lobby when game is full
 
-    private final static int sizeOfArray = 50;
-
-
-
-    static WordGrid wordGrid = new WordGrid(656);
-    GameScreen()
+    public GameScreen() 
     {
-        Button = new PlayerType[625];
-        // initialize it
-        for (int i = 0; i < Button.length; i++) {
-            Button[i] = PlayerType.NOUSER;
-        }
+        // Created by Abubakar Kassim
+        this.players = new ArrayList<PlayerType>();
+
+        wordBank = new WordBank();
+        wordBank.addWordsFromFile("words.txt");
+        wordBank.generateGrid(25, 25);
+        wordBank.printGrid();
 
         Msg = new String[2];
-        // chatBox = new ChatBox();
-        Players = PlayerType.USER1;
-        CurrentTurn = PlayerType.NOUSER;
+
+        chatBox = new ChatBox();
+        scoreBoard = new Scoreboard(4);
+
+        pickedLetters = new ArrayList<>();
+
+        Players = PlayerType.XPLAYER;
+        CurrentTurn = PlayerType.NOPLAYER;
 
         Msg[0] = "Waiting for other player to join";
-        Msg[1] = "";    
+        Msg[1] = "";
+
+        GridRow = -1;
+        GridColumn = -1;
+
+        playersJoined = 0;
+
+        start = new int[]{-1, -1};
+        end = new int[]{-1, -1};
     }
-    public static void StartGame() 
+
+    public String Hello()
     {
-        isUserActive[index] = true;
-        System.out.println(gridString);
-        char[][] grid = wordGrid.generateRandomGrid(sizeOfArray, sizeOfArray);
-        wordGrid.printGrid(grid);
-        // for (int i = 1; i <= 4; i++ )
-        // {
-        //     String s;
-        //     s =num++);
-        // }
-        return;
+        String message = "Hello";
+        return message;
     }
-    public void TurnSystem()
-    {
-        int j;
-        //Player 1's turn
-        if (isUserActive[0] == true && counter <= 0)
+
+    public void StartGame() {
+        // X player goes first. Because that is how it is.
+        Msg[0] = "You are X. Your turn";
+        Msg[1] = "Not your turn";
+        CurrentTurn = PlayerType.XPLAYER;
+    }
+
+    // This function returns an index for each player
+    // It does not depend on the representation of Enums
+    public int PlayerToIdx(PlayerType P) {
+        int retval = 0;
+        if (P == PlayerType.XPLAYER) {
+            retval = 0;
+        } 
+        else if (P == PlayerType.OPLAYER) 
         {
-            for (int i = 1; i < isUserActive.length; i++)
-            {
-                isUserActive[i] = false;
-            }
+            retval = 1;
         }
-        //Player 2's turn
-        else if (isUserActive[1] == true && counter <= 0)
+        else if (P == PlayerType.PLAYER3) 
         {
-            for (int i = 2; i < isUserActive.length; i++)
-            {
-                isUserActive[i] = false;
-            }
-            isUserActive[0] = false;
+            retval = 2;
         }
-        //Player 3's turn
-        else if (isUserActive[2] = true && counter <= 0)
+        else if (P == PlayerType.PLAYER4) 
         {
-            for (int i = 2; i < isUserActive.length; i++)
-            {
-                isUserActive[i] = false;
-            }
-            isUserActive[0] = false;
-            isUserActive[1] = false;
-
+            retval = 3;
         }
-        //Player 4's turn
-        else if (isUserActive[3] = true && counter <= 0)
-        {
-            for (int i = 3; i < isUserActive.length; i++)
-            {
-                isUserActive[0] = false;
-                isUserActive[1] = false;
-                isUserActive[2] = false;
-                isUserActive[i] = false;
-            }
-        }
+        return retval;
     }
-
-
-    public void CheckBoard() {
-        return;
-    }
-
-    public void CheckVertical() {
-        return;
-    }
-
-    public void CheckHorizontal() {
-        return;
-    }
-
-    public void CheckDiagonal() {
-        return;
-    }
-
-    public void CheckReverse() {
-        return;
-    }
-
-    public void Tick() {
-        return;
-    }
-
-
 
     public void Timer() {
+        /*
         Timer timer = new Timer();
         int delay = 1000; // 1 second
         int period = 1000; // 1 second
@@ -145,141 +112,83 @@ public class GameScreen {
                     // timer.cancel(); // Terminate the timer when countdown is complete
                 }
             }
-        }, delay, period);
-    }
-    private boolean CheckLine(int i, int j, int k, PlayerType player) {
-        return player == Button[i] && player == Button[j] && player == Button[k]; 
+        }, delay, period);*/
     }
 
-    private boolean CheckHorizontal(PlayerType player) {
-        return CheckLine(0, 1, 2, player) | CheckLine(3, 4, 5, player) | CheckLine(6, 7, 8, player); //Needs to be changed
-    }
-
-    private boolean CheckVertical(PlayerType player) {
-        return CheckLine(0, 3, 6, player) | CheckLine(1, 4, 7, player) | CheckLine(2, 5, 8, player); //Needs to be changed
-    }
-
-    private boolean CheckDiagonal(PlayerType player) {
-        return CheckLine(0, 4, 8, player) | CheckLine(2, 4, 6, player); // Needs to be changed
-    }
-
-    private boolean CheckBoard(PlayerType player) 
-    {
-        return CheckHorizontal(player) | CheckVertical(player) | CheckDiagonal(player);
-    }
-    
-    // Might be obsolete. NO Wins or Lose Senario.
-    // private boolean CheckDraw(PlayerType player) {
-    //     // how to check for a draw?
-    //     // Are all buttons are taken ?
-    //     int count = 0;
-    //     for (int i = 0; i < Button.length; i++) {
-    //         if (Button[i] == PlayerType.NOUSER) {
-    //             count = count + 1;
-    //         }
-    //     }
-
-        // return count == 0;
-    //}
     public void Update(UserEvent U) {
-        System.out.println("The user event is " + U.PlayerIdx + "  " + U.Button + " " /* + U.ChatMsg*/);
-        // chatBox.setMessageSent(false);
+        System.out.println("The user event is " + U.PlayerIdx + " " + U.Button + " " + U.Msg);
+        System.out.println("The user event is " + U.PlayerIdx + " " + U.GridRow + " " + U.GridColumn);
+        chatBox.setMessageSent(false);
 
-        if(U.Button == 625)
+        List<WordLocation> wordLocations = wordBank.getWordLocations();
+
+        if(U.Button == -1)
         {
-            // chatBox.addMessage(U.ChatMsg);
-            // chatBox.setMessageSent(true);
+            if(start[0] == -1)
+            {
+                start[0] = U.GridRow;
+                start[1] = U.GridColumn;
+            }
+            else if(end[0] == -1)
+            {
+                end[0] = U.GridRow;
+                end[1] = U.GridColumn;
+
+                WordLocation location;
+                for(int i = 0; i < wordLocations.size(); i++)
+                {
+                    location = wordLocations.get(i);
+                    if(location.getStartRow() == start[0] && location.getStartCol() == start[1])
+                    {
+                        if(location.getEndRow() == end[0] && location.getEndCol() == end[1])
+                        {
+                            for(int j = 0; j < location.getWord().length(); j++)
+                            {
+                                if(location.getDirection() == 0)
+                                {
+                                    pickedLetters.add(new PickedLetters(start[0]+j, start[1], U.PlayerIdx));
+                                }
+                                else if(location.getDirection() == 1)
+                                {
+                                    pickedLetters.add(new PickedLetters(start[0], start[1]+j, U.PlayerIdx));
+                                }
+                                else if(location.getDirection() == 2)
+                                {
+                                    pickedLetters.add(new PickedLetters(start[0]-j, start[1], U.PlayerIdx));
+                                }
+                                else if(location.getDirection() == 3)
+                                {
+                                    pickedLetters.add(new PickedLetters(start[0], start[1]-j, U.PlayerIdx));
+                                }
+                                else
+                                {
+                                    pickedLetters.add(new PickedLetters(start[0]+j, start[1]+j, U.PlayerIdx));
+                                }
+                                scoreBoard.addScore(PlayerToIdx(U.PlayerIdx));
+                            }
+                            wordLocations.remove(i);
+                            i = wordLocations.size();
+                        }
+                    }
+                }
+
+                start[0] = -1;
+                start[1] = -1;
+                end[0] = -1;
+                end[1] = -1;
+            }
+
         }
-        else if ((CurrentTurn == U.PlayerIdx) && (CurrentTurn == PlayerType.USER1 || CurrentTurn == PlayerType.USER2 || CurrentTurn == PlayerType.USER3 || CurrentTurn == PlayerType.USER4)) {
-            // Move is legitimate, lets do what was requested
-
-            // Is the button not taken by X or O?
-            if (Button[U.Button] == PlayerType.NOPLAYER)
+        else if(U.Button == 9)
+        {
+            if(!U.Msg.isEmpty())
             {
-                System.out.println("the button was 0, setting it to " + U.PlayerIdx);
-                Button[U.Button] = U.PlayerIdx;
-                if (U.PlayerIdx == PlayerType.PLAYER1)
-                {
-
-                    CurrentTurn = PlayerType.PLAYER2;
-                    Msg[1] = "Other Players Move.";
-                    Msg[0] = "Your Move.";
-                }
-                else if (U.PlayerIdx == PlayerType.PLAYER2)
-                {
-                    CurrentTurn = PlayerType.PLAYER3;
-                    Msg[0] = "Other Players Move.";
-                    Msg[1] = "Your Move.";
-                }
-                else if (CurrentTurn == PlayerType.PLAYER3)
-                {
-                    CurrentTurn = PlayerType.PLAYER4;
-                    Msg[0] = "Other Players Move.";
-                    Msg[1] = "Your Move.";                
-                }
-                else if (CurrentTurn == PlayerType.PLAYER4)
-                {
-                    CurrentTurn = PlayerType.PLAYER1;
-                    Msg[0] = "Other Players Move.";
-                    Msg[1] = "Your Move."; 
-                }
+                chatBox.addMessage(U.PlayerIdx + ": " + U.Msg);
+                chatBox.setMessageSent(true);
             }
-            else
-            {
-                // Msg[PlayerToIdx(U.PlayerIdx)] = "Not a legal move.";
-            }
-
-            // Check for winners, losers, and a draw
-
-            if (CheckBoard(PlayerType.USER1)) //User 1 earns points
-            {
-                // gamesPlayed++;
-                // gamesWonAsX++;
-                // concurrentGames--;
-                Msg[0] = "User 2 earns points!";
-                Msg[1] = "You Lose!";
-                CurrentTurn = PlayerType.NOUSER;
-            } 
-            else if (CheckBoard(PlayerType.USER2)) //User 2 earns points
-            {
-                // gamesPlayed++;
-                // gamesWonAsY++;
-                // concurrentGames--;
-                Msg[1] = "User 2 earns points";
-                Msg[0] = "You Lose!";
-                CurrentTurn = PlayerType.NOUSER;
-            } 
-            else if (CheckBoard(PlayerType.USER3)) //User 3 earns points
-            {
-                // gamesPlayed++;
-                // gamesWonAsY++;
-                // concurrentGames--;
-                Msg[1] = "User 3 earns points";
-                Msg[0] = "You Lose!";
-                CurrentTurn = PlayerType.NOUSER;
-            } 
-            else if (CheckBoard(PlayerType.USER4)) //User 4 earns points
-            {
-                // gamesPlayed++;
-                // gamesWonAsY++;
-                // concurrentGames--;
-                Msg[1] = "User 4 earned points!";
-                Msg[0] = "You Lose!";
-                CurrentTurn = PlayerType.NOUSER;
-            } 
         }
     }
 
-    // public void Tick() {
-    //     // this function can be called periodically if a
-    //     // timer is needed.
-
-    // }
-
-    // public ChatBox getChatBox() {
-    //     return chatBox;
-    // }
 }
-
-
-
+// In windows, shift-alt-F formats the source code
+// In linux, it is ctrl-shift-I

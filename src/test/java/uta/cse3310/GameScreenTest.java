@@ -7,13 +7,16 @@ import org.java_websocket.WebSocket;
 import org.junit.Before;
 import org.junit.Test;
 
-import static org.junit.Assert.assertTrue;
 
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 
-public class GameScreenTest extends TestCase
+public class GameScreenTest
 {
     GameScreen game = new GameScreen();
+    LobbyScreen lobby = new LobbyScreen();
 
     @BeforeEach
     public void verifySetup()
@@ -25,6 +28,13 @@ public class GameScreenTest extends TestCase
          */
         GameScreen.StartGame();
         assertTrue(game.isOpen);
+    }
+    @Test
+    public void Hello()
+    {
+        GameScreen game = new GameScreen();
+        String a = "Hello";
+        assertEquals("hello", game.Hello()  );
     }
     @Test
     public void testStartGame(String testName)
@@ -48,6 +58,31 @@ public class GameScreenTest extends TestCase
     public void verifyTurnSystem()
     {
         
+    }
+    @Test
+     // testing adding and removing a player from a game
+     public void testAddandRemovePlayer(){
+        Player p1 = new Player("1");
+        ArrayList<String> words = new ArrayList<String>();
+        try{
+            String str;
+            BufferedReader reader = new BufferedReader(new FileReader("filtered_words.txt"));
+            while((str = reader.readLine())!=null)
+                words.add(str);
+            reader.close();
+        }
+        catch(IOException e) {
+            e.printStackTrace();
+        }
+        LobbyScreen lobby = new LobbyScreen();
+        App A = new App(20);
+        GameScreen test = new GameScreen(p1, words, lobby, A);
+
+        Player p2 = new Player("2");
+        test.addPlayer(p2);
+        assertTrue("Player Not Found",test.players.contains(p2));
+        test.removePlayer(p2);
+        assertFalse("Player Found",test.players.contains(p2));
     }
     @Test
     public void testHighlightingWord()
