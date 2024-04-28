@@ -194,31 +194,32 @@ public class GameScreen {
             // Move is legitimate, lets do what was requested
 
             // Is the button not taken by X or O?
-            if (Button[U.Button] == PlayerType.NOUSER)
+            if (Button[U.Button] == PlayerType.NOPLAYER)
             {
                 System.out.println("the button was 0, setting it to " + U.PlayerIdx);
                 Button[U.Button] = U.PlayerIdx;
-                if (U.PlayerIdx == PlayerType.USER1)
+                if (U.PlayerIdx == PlayerType.PLAYER1)
                 {
-                    CurrentTurn = PlayerType.USER2;
+
+                    CurrentTurn = PlayerType.PLAYER2;
                     Msg[1] = "Other Players Move.";
                     Msg[0] = "Your Move.";
                 }
-                else if (U.PlayerIdx == PlayerType.USER2)
+                else if (U.PlayerIdx == PlayerType.PLAYER2)
                 {
-                    CurrentTurn = PlayerType.USER3;
+                    CurrentTurn = PlayerType.PLAYER3;
                     Msg[0] = "Other Players Move.";
                     Msg[1] = "Your Move.";
                 }
-                else if (CurrentTurn == PlayerType.USER3)
+                else if (CurrentTurn == PlayerType.PLAYER3)
                 {
-                    CurrentTurn = PlayerType.USER4;
+                    CurrentTurn = PlayerType.PLAYER4;
                     Msg[0] = "Other Players Move.";
                     Msg[1] = "Your Move.";                
                 }
-                else if (CurrentTurn == PlayerType.USER4)
+                else if (CurrentTurn == PlayerType.PLAYER4)
                 {
-                    CurrentTurn = PlayerType.USER1;
+                    CurrentTurn = PlayerType.PLAYER1;
                     Msg[0] = "Other Players Move.";
                     Msg[1] = "Your Move."; 
                 }

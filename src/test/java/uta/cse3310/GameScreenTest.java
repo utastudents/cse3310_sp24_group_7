@@ -1,6 +1,8 @@
 package uta.cse3310;
 import org.junit.jupiter.api.*;
 
+import junit.framework.TestCase;
+
 import org.java_websocket.WebSocket;
 import org.junit.Before;
 import org.junit.Test;
@@ -9,7 +11,7 @@ import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
-public class GameScreenTest 
+public class GameScreenTest extends TestCase
 {
     GameScreen game = new GameScreen();
 
@@ -19,17 +21,18 @@ public class GameScreenTest
         App app = new App(9880); //
         app.setOnOpen((WebSocket conn)->System.out.println("Connection opened"));
         /*
-         * Need to finalize cpde
+         * Need to finalize code
          */
         GameScreen.StartGame();
         assertTrue(game.isOpen);
     }
     @Test
-    public void testStartGame()
+    public void testStartGame(String testName)
     {
         App app = new App(9880);
         // app.GameScreen();
         // assertTrue(app.);
+        super(testName);
     }
     @Test
     public void verfiyTimer() // used to move on from timer test, not actually testing the functionality
