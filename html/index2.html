@@ -1,74 +1,50 @@
-<!--
-  <head>
-  <meta charset="UTF-8">
-  <title>Random Character Grid</title>
+<head>
+  <meta charset="utf-8">
   <style>
-    table {
-      border-collapse: collapse;
-      width: 100%;
+    #gameTable {
+      float: left;
+      width: 65%;
     }
-    td {
+    #sidePanels {
+      position: absolute;
+      right: 20px;
+      top: 20px;
+      width: 30%;
+      display: flex;
+      flex-direction: column;
+    }
+    #scoreBoard, #wordList {
       border: 1px solid black;
       padding: 10px;
-      text-align: center;
+      margin-bottom: 10px;
+    }
+    #wordList {
+      overflow-y: auto;
+      flex-grow: 1;
+    }
+    #chatbox {
+      clear: both;
     }
   </style>
 </head>
-<body>
-  <div id="gameTable"></div>
 
-  <script>
-    var serverUrl = "ws://" + window.location.hostname + ":9880";
-    var connection = new WebSocket(serverUrl);
-
-    connection.onmessage = function(evt) {
-      console.log("Message received: ", evt.data);
-      var data = JSON.parse(evt.data);
-      
-      if(data.wordBank && data.wordBank.grid) { // Make sure to properly check for the nested property
-        updateGrid(data.wordBank.grid);
-      }
-    };
-
-    function updateGrid(grid) {
-      var table = document.createElement('table');
-      grid.forEach(function(row, rowIndex) {
-        var tr = document.createElement('tr');
-        row.forEach(function(column, columnIndex) {
-          var td = document.createElement('td');
-          var button = document.createElement('button');
-          button.textContent = column;
-          // Set up an onclick function that calls buttonclick with parameters
-          button.onclick = function() {
-            //buttonclick(rowIndex, columnIndex); // Assuming you want to pass row and column indexes
-          };
-          td.appendChild(button);
-          tr.appendChild(td);
-        });
-        table.appendChild(tr);
-      });
-      var container = document.getElementById('gameTable');
-      container.innerHTML = ''; // Clear previous table
-      container.appendChild(table);
-    }
-  </script>
--->
-
-
-<head>
-  <meta charset="utf-8">
-</head>
 
 <label id="topMessage"></label>
 
 <body>
   <div id="gameTable"></div>
+  <div id="sidePanels" style="position: absolute; right: 20px; top: 20px; width: 30%;">
+    <div id="scoreBoard" style="border: 1px solid black; padding: 10px; margin-bottom: 10px;"></div>
+    <div id="wordList" style="border: 1px solid black; padding: 10px; overflow-y: auto; max-height: 300px;"></div>
+  </div>
+
 
   <div id="chatbox">
     <div id="messages" style="height: 200px; overflow-y: scroll; background: #f1f1f1; margin-bottom: 10px;"></div>
     <input type="text" id="message" placeholder="Type message here..." style="width: 70%;" onkeypress="if(event.keyCode==13) chat();">
     <button onclick="chat();">Send</button>
   </div>
+
 
   <script>
     var idx = -1;
@@ -122,12 +98,15 @@
         if(gameid == obj.GameId && obj.playersJoined < 3)
         {
           generateGrid(obj.wordBank.grid);
+          generateScoreboard(obj.scoreBoard.scores);
+          displayWords(obj.wordBank.wordsPlaced);
         }
         else
         {
           if(gameid == obj.GameId)
           {
             updateGrid(obj.pickedLetters);
+            updateScoreboard(obj.scoreBoard.scores);
           }
 
           if (obj.chatBox.messageSent == true && gameid == obj.GameId) {
@@ -201,29 +180,60 @@
       });
     }
 
-
-
-    function buttonclick(i, j) {
-      U = new UserEvent();
-      U.GridRow = i;
-      U.GridColumn = j;
-      if (idx == 0)
-        U.PlayerIdx = "XPLAYER";
-      else
-        U.PlayerIdx = "OPLAYER";
-      U.GameId = gameid;
-
-      var buttonElement = document.querySelector('table tr:nth-child(' + (i + 1) + ') td:nth-child(' + (j + 1) + ') button');
-
-      if(U.PlayerIdx == 'XPLAYER'){
-        buttonElement.style.backgroundColor = 'yellow';
-      }
-      else if(U.PlayerIdx == 'OPLAYER'){
-        buttonElement.style.backgroundColor = 'green';
-      }
-
-
-      connection.send(JSON.stringify(U));
-      console.log(JSON.stringify(U));
+    function generateScoreboard(scores) {
+      var scoreboard = document.getElementById('scoreBoard');
+      scoreboard.innerHTML = ''; // Clear previous scores
+      scores.forEach(function(score, index) {
+        var p = document.createElement('p');
+        p.textContent = "Player " + (index + 1) + ": 0";
+        scoreboard.appendChild(p);
+      });
     }
-  </script>
+
+    function updateScoreboard(scores) {
+      var scoreboard = document.getElementById('scoreBoard');
+    scoreboard.innerHTML = ''; // Clear existing scores
+    scores.forEach(function(score, index) {
+      var p = document.createElement('p');
+      p.textContent = "Player " + (index + 1) + ": " + score;
+      scoreboard.appendChild(p);
+    });
+  }
+
+  function displayWords(words) {
+    var listContainer = document.getElementById('wordList');
+  listContainer.innerHTML = ''; // Clear existing words
+  var ul = document.createElement('ul');
+  words.forEach(function(word) {
+    var li = document.createElement('li');
+    li.textContent = word;
+    ul.appendChild(li);
+  });
+  listContainer.appendChild(ul);
+}
+
+
+function buttonclick(i, j) {
+  U = new UserEvent();
+  U.GridRow = i;
+  U.GridColumn = j;
+  if (idx == 0)
+    U.PlayerIdx = "XPLAYER";
+  else
+    U.PlayerIdx = "OPLAYER";
+  U.GameId = gameid;
+
+  var buttonElement = document.querySelector('table tr:nth-child(' + (i + 1) + ') td:nth-child(' + (j + 1) + ') button');
+
+  if(U.PlayerIdx == 'XPLAYER'){
+    buttonElement.style.backgroundColor = 'yellow';
+  }
+  else if(U.PlayerIdx == 'OPLAYER'){
+    buttonElement.style.backgroundColor = 'green';
+  }
+
+
+  connection.send(JSON.stringify(U));
+  console.log(JSON.stringify(U));
+}
+</script>
