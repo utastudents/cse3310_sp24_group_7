@@ -7,11 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+//known bugs
+//wordsPlaced is not accurate. not every word in wordsPlaced is actually placed on the grid
+
 public class WordBank {
     private char[][] grid;
     private List<String> wordsPlaced; // To store words successfully placed in the grid
     private List<WordLocation> wordLocations;                  //This is causing errors
-    //private int[] start
 
     public WordBank() {
         wordsPlaced = new ArrayList<>();
