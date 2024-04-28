@@ -20,10 +20,12 @@ public class WordGridTest
 
     }
     @Test
-    public void testPlaceWord() {
-        int rows = 25;
-        WordGrid wordGrid = new WordGrid(rows);
-        ArrayList<String> words = new ArrayList<>();
+    public void testPlaceWord() 
+    {
+        // INCOMPLETE
+        int size = 25;
+
+        ArrayList<String> words = new ArrayList<>(size);
         words.add("Terra");
         words.add("Gaia");
         words.add("Geb");
@@ -32,4 +34,20 @@ public class WordGridTest
         //no error
         assertTrue(words.size() == 4);
     }
+    @Test
+    public void testDensity()
+    {
+
+    }
+    @Test
+    public void testRandomness()
+    {
+
+    }
+    @Test
+    public void testGridTime()
+    {
+
+    }
+
 }
