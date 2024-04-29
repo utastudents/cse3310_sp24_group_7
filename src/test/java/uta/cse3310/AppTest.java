@@ -5,11 +5,11 @@ import org.junit.Test;
 
 public class AppTest {
 
-    //Test Socket
+    //Tests Socket creation
     @Test
     public void testWebSocketPort() {
 
-        //Setexpected # for port
+        //Set expected # for port
         int initialPort = 9107;
 
         //Create Instance Of App

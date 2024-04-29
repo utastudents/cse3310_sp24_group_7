@@ -9,6 +9,7 @@ import org.junit.Test;
 public class HttpServerTest 
 {
 
+    //testing that when the server starts after being given a port, it starts
     @Test
     public void startTheTestServer() 
     {
@@ -18,6 +19,8 @@ public class HttpServerTest
         httpServer.start();
         assertNotNull(httpServer);
     }
+
+    //teting that the server doesnt run too slow
     @Test
     public void testServerTime()
     {

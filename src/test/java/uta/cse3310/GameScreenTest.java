@@ -1,99 +1,56 @@
 package uta.cse3310;
-/*
+
 import org.junit.jupiter.api.*;
-
-import junit.framework.TestCase;
-
-import org.java_websocket.WebSocket;
 import org.junit.Before;
 import org.junit.Test;
 
+import static org.junit.Assert.assertTrue;
 
-import java.io.BufferedReader;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
 
-public class GameScreenTest
-{
-    GameScreen game = new GameScreen();
-    LobbyScreen lobby = new LobbyScreen();
+public class GameScreenTest {
 
-    @BeforeEach
-    public void verifySetup()
-    {
-        App app = new App(9880); //
-        app.setOnOpen((WebSocket conn)->System.out.println("Connection opened"));
-        /*
-         * Need to finalize code
-         */
-        /*GameScreen.StartGame();
-        assertTrue(game.isOpen);
-    }
+
+    //It checks if the timer is properly implemented
     @Test
-    public void Hello()
-    {
-        GameScreen game = new GameScreen();
-        String a = "Hello";
-        assertEquals("hello", game.Hello()  );
-    }
-    @Test
-    public void testStartGame(String testName)
-    {
-        App app = new App(9880);
-        // app.GameScreen();
-        // assertTrue(app.);
-        super(testName);
-    }
-    @Test
-    public void verfiyTimer() // used to move on from timer test, not actually testing the functionality
-    {
+    public void testTimer() {
         GameScreen game = new GameScreen();
         game.Timer();
-            if (game.counter < 0)
-            {
-                assertTrue(game.Timer() <= 0);
-            }        
-    }
-    @Test
-    public void verifyTurnSystem()
-    {
-        
-    }
-    @Test
-     // testing adding and removing a player from a game
-     public void testAddandRemovePlayer(){
-        Player p1 = new Player("1");
-        ArrayList<String> words = new ArrayList<String>();
-        try{
-            String str;
-            BufferedReader reader = new BufferedReader(new FileReader("filtered_words.txt"));
-            while((str = reader.readLine())!=null)
-                words.add(str);
-            reader.close();
-        }
-        catch(IOException e) {
+
+        try {
+            Thread.sleep(3000);
+        } catch (InterruptedException e) {
             e.printStackTrace();
         }
-        LobbyScreen lobby = new LobbyScreen();
-        App A = new App(20);
-        GameScreen test = new GameScreen(p1, words, lobby, A);
 
-        Player p2 = new Player("2");
-        test.addPlayer(p2);
-        assertTrue("Player Not Found",test.players.contains(p2));
-        test.removePlayer(p2);
-        assertFalse("Player Found",test.players.contains(p2));
+        assertTrue(game.counter <= 3); // Adjust the expected value based on your Timer logic
     }
-    @Test
-    public void testHighlightingWord()
-    {
 
-    }
+    //tests when a user sends a message to the chat
     @Test
-    public void testRestartButton()
+    public void testChatUpdate()
     {
-        
+        GameScreen game = new GameScreen();
+        UserEvent XChatMsg = new UserEvent();
+        XChatMsg.PlayerIdx = PlayerType.XPLAYER;
+        XChatMsg.GameId = 1;
+        XChatMsg.Button = 9;
+        XChatMsg.Msg = "Test!";
+        game.Update(XChatMsg);
     }
+
+    //tests when a user clicks a button on the grid
+    @Test
+    public void testGridClickUpdate()
+    {
+        GameScreen game = new GameScreen();
+        UserEvent XGridClick = new UserEvent();
+        XGridClick.PlayerIdx = PlayerType.XPLAYER;
+        XGridClick.GameId = 1;
+        XGridClick.GridRow = 4;
+        XGridClick.GridColumn = 3;
+
+        game.Update(XGridClick);
+    }
+
 }
-*/

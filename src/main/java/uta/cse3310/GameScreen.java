@@ -1,7 +1,8 @@
 package uta.cse3310;
 import java.util.ArrayList;
 import java.util.List;
-
+import java.util.Timer;
+import java.util.TimerTask;
 //known bugs
 //while one player has a letter selected, the other player cannot score any words
 
@@ -15,6 +16,7 @@ public class GameScreen {
     public int[] start;
     public int[] end;
     public int playersJoined;
+    int counter = 3;
 
     //Created by Abubakar Kassim
     public ArrayList<PlayerType> players;
@@ -41,10 +43,13 @@ public class GameScreen {
 
         start = new int[]{-1, -1};
         end = new int[]{-1, -1};
+
+        
     }
 
     public void StartGame() {
         // X player goes first. Because that is how it is.
+        Timer();
     }
 
     // This function returns an index for each player
@@ -70,13 +75,13 @@ public class GameScreen {
     }
 
     public void Timer() {
-        /*
+        
         Timer timer = new Timer();
         int delay = 1000; // 1 second
         int period = 1000; // 1 second
 
         timer.scheduleAtFixedRate(new TimerTask() {
-            int counter = 30; // Should be set to 30.
+            
 
             public void run() {
                 System.out.println("Seconds left: " + counter);
@@ -84,14 +89,14 @@ public class GameScreen {
 
                 if (counter < 0) {
                     System.out.println("Time's up!");
-                    index++;
+                    counter++;
 
                     counter = 30;
 
-                    // timer.cancel(); // Terminate the timer when countdown is complete
+                     timer.cancel(); // Terminate the timer when countdown is complete
                 }
             }
-        }, delay, period);*/
+        }, delay, period);
     }
 
     public void Update(UserEvent U) {

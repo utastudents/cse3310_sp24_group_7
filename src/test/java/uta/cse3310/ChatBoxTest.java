@@ -17,6 +17,8 @@ public class ChatBoxTest {
     public void setUp() throws Exception {
         chatBox = new ChatBox(); // Initialize the ChatBox instance before each test
     }
+
+    //tests clearing the chat
     @Test
     public void resetChat()
     {
@@ -24,6 +26,7 @@ public class ChatBoxTest {
         assertNull(chatBox);
     }
 
+    //tests adding a message to chatbox arraylist
     @Test
     public void testAddMessage() {
         String message = "Hello";
@@ -34,6 +37,8 @@ public class ChatBoxTest {
 
         assertEquals(expectedMessages, chatBox.getMessages());
     }
+
+    //tests getting a message from chatbox
     @Test
     public void testGetMessage()
     {
