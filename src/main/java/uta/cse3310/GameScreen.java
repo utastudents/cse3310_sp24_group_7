@@ -75,7 +75,7 @@ public class GameScreen {
         if (P == PlayerType.PLAYER1) {
             retval = 0;
         } 
-        else if (P == PlayerType.OPLAYER) 
+        else if (P == PlayerType.PLAYER2) 
         {
             retval = 1;
         }
