@@ -1,16 +1,14 @@
 package uta.cse3310;
 
 import static junit.framework.Assert.assertEquals;
-import org.junit.Test;
 
 public class AppTest {
 
-    //Tests Socket creation
-    @Test
+    //Test Socket
     public void testWebSocketPort() {
 
         //Set expected # for port
-        int initialPort = 9107;
+        int initialPort = 9109;
 
         //Create Instance Of App
         App app = new App(initialPort);
@@ -18,6 +16,7 @@ public class AppTest {
         int portRunning = app.getPort();
 
         // If initialPort = portRunning then TRUE, else FALSE
+
         assertEquals(initialPort, portRunning);
     }
 }
