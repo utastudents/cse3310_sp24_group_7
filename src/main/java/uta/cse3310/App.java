@@ -56,7 +56,7 @@ public class App extends WebSocketServer {
     // search for a game needing a player
     GameScreen G = null;
     for (GameScreen i : ActiveGames) {
-      if (i.Players == uta.cse3310.PlayerType.XPLAYER) {
+      if (i.Players == uta.cse3310.PlayerType.PLAYER1 || i.Players == uta.cse3310.PlayerType.PLAYER2 || i.Players == uta.cse3310.PlayerType.PLAYER3) {
         G = i;
         System.out.println("found a match");
       }
@@ -68,26 +68,28 @@ public class App extends WebSocketServer {
       G.GameId = GameId;
       GameId++;
       // Add the first player
-      G.Players = uta.cse3310.PlayerType.XPLAYER;
+      G.Players = uta.cse3310.PlayerType.PLAYER1;
       G.playersJoined++;
       ActiveGames.add(G);
       System.out.println(" creating a new Game");
-    } else {
+    } else if (G.Players == PlayerType.PLAYER1) {
       // join an existing game
       System.out.println(" not a new game");
-    // join an existing game
-    System.out.println(" not a new game");
-    if (G.playersJoined == 1) {
-        G.Players = uta.cse3310.PlayerType.OPLAYER;
-    } else if (G.playersJoined == 2) {
-        G.Players = uta.cse3310.PlayerType.PLAYER3;
-    } else if (G.playersJoined == 3) {
-        G.Players = uta.cse3310.PlayerType.PLAYER4;
-    }
-
+      G.Players = uta.cse3310.PlayerType.PLAYER2;
       G.playersJoined++;
-      G.StartGame();
+    } else if (G.Players == PlayerType.PLAYER2) {
+      // join an existing game
+      System.out.println(" not a new game");
+      G.Players = uta.cse3310.PlayerType.PLAYER3;
+      G.playersJoined++;
     }
+    else {
+      // join an existing game
+      System.out.println(" not a new game");
+      G.Players = uta.cse3310.PlayerType.PLAYER4;
+      G.playersJoined++;
+    }
+    
     System.out.println("G.players is " + G.Players);
     // create an event to go to only the new player
     E.YouAre = G.Players;
@@ -101,12 +103,14 @@ public class App extends WebSocketServer {
     System.out.println(gson.toJson(E));
 
     // The state of the game has changed, so lets send it to everyone
-    String jsonString;
-    jsonString = gson.toJson(G);
+    if(G.playersJoined == 4)
+    {
+      String jsonString;
+      jsonString = gson.toJson(G);
 
-    System.out.println(jsonString);
-    broadcast(jsonString);
-
+      System.out.println(jsonString);
+      broadcast(jsonString);
+    }
   }
 
   @Override
@@ -130,8 +134,11 @@ public class App extends WebSocketServer {
 
     // Get our Game Object
     GameScreen G = conn.getAttachment();
+    if(G.playersJoined == 4)
+    {
+      G.playersJoined = 5;
+    }
     G.Update(U);
-    G.playersJoined++;
 
     // send out the game state every time
     // to everyone
@@ -140,43 +147,44 @@ public class App extends WebSocketServer {
 
     // System.out.println(jsonString);
     broadcast(jsonString);
+
   }
 
-    @Override
-    public void onMessage(WebSocket conn, ByteBuffer message) {
-      System.out.println(conn + ": " + message);
-    }
+  @Override
+  public void onMessage(WebSocket conn, ByteBuffer message) {
+    System.out.println(conn + ": " + message);
+  }
 
 
-    @Override
-    public void onError(WebSocket conn, Exception ex) {
-      ex.printStackTrace();
-      if (conn != null) {
+  @Override
+  public void onError(WebSocket conn, Exception ex) {
+    ex.printStackTrace();
+    if (conn != null) {
       // some errors like port binding failed may not be assignable to a specific
       // websocket
-      }
     }
+  }
 
-    @Override
-    public void onStart() {
-      System.out.println("Server started!");
-      setConnectionLostTimeout(0);
-    }
+  @Override
+  public void onStart() {
+    System.out.println("Server started!");
+    setConnectionLostTimeout(0);
+  }
 
-    public static void main(String[] args) {
+  public static void main(String[] args) {
 
     // Set up the http server
-      int port = 9007;
-      HttpServer H = new HttpServer(port, "./html");
-      H.start();
-      System.out.println("http Server started on port:" + port);
+    int port = 9007;
+    HttpServer H = new HttpServer(port, "./html");
+    H.start();
+    System.out.println("http Server started on port:" + port);
 
     // create and start the websocket server
 
-      port = 9107;
-      App A = new App(port);
-      A.start();
-      System.out.println("websocket Server started on port: " + port);
+    port = 9107;
+    App A = new App(port);
+    A.start();
+    System.out.println("websocket Server started on port: " + port);
 
-    }
   }
+}

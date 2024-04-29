@@ -37,7 +37,23 @@ public class GameScreen {
 
         pickedLetters = new ArrayList<>();
 
-        Players = PlayerType.XPLAYER;
+        if(playersJoined == 0)
+        {
+            Players = PlayerType.PLAYER1;
+        }
+        else if(playersJoined == 1)
+        {
+            Players = PlayerType.PLAYER2;
+        }
+        else if(playersJoined == 2)
+        {
+            Players = PlayerType.PLAYER3;
+        }
+        else
+        {
+            Players = PlayerType.PLAYER4;
+        }
+        
 
         playersJoined = 0;
 
@@ -49,14 +65,14 @@ public class GameScreen {
 
     public void StartGame() {
         // X player goes first. Because that is how it is.
-        Timer();
+        //Timer();
     }
 
     // This function returns an index for each player
     // It does not depend on the representation of Enums
     public int PlayerToIdx(PlayerType P) {
         int retval = 0;
-        if (P == PlayerType.XPLAYER) {
+        if (P == PlayerType.PLAYER1) {
             retval = 0;
         } 
         else if (P == PlayerType.OPLAYER) 

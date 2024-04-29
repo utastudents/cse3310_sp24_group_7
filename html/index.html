@@ -58,6 +58,7 @@
       Msg = null;
     }
     var connection = null;
+    var playersJoined = null;
 
     let start = [-1, -1];
     let end = [-1, -1];
@@ -82,12 +83,14 @@
       console.log("Message received: " + msg);
       const obj = JSON.parse(msg);
 
+      playersJoined = obj.playersJoined;
+
       if ('YouAre' in obj) {
-        if (obj.YouAre == "XPLAYER") 
+        if (obj.YouAre == "PLAYER1") 
         {
           idx = 0;
         }
-        else if (obj.YouAre == "OPLAYER") 
+        else if (obj.YouAre == "PLAYER2") 
         {
           idx = 1;
         }
@@ -103,7 +106,7 @@
       }
       else if(gameid == obj.GameId)
       {
-        if(obj.playersJoined < 3)
+        if(obj.playersJoined == 4)
         {
           generateGrid(obj.wordBank.grid);
           generateScoreboard(obj.scoreBoard.scores);
@@ -131,9 +134,9 @@
       U = new UserEvent();
       U.Button = 9;
       if (idx == 0)
-        U.PlayerIdx = "XPLAYER";
+        U.PlayerIdx = "PLAYER1";
       else if (idx == 1)
-        U.PlayerIdx = "OPLAYER";
+        U.PlayerIdx = "PLAYER2";
       else if (idx == 2)
         U.PlayerIdx = "PLAYER3";
       else if (idx == 3)
@@ -183,14 +186,14 @@
       }
       letters.forEach(function (letter) {
         var buttonElement = document.querySelector('table tr:nth-child(' + (letter.row + 1) + ') td:nth-child(' + (letter.col + 1) + ') button');
-        if (letter.playerId == 'XPLAYER') {
+        if (letter.playerId == 'PLAYER1') {
           buttonElement.style.backgroundColor = 'yellow';
-        } else if (letter.playerId == 'OPLAYER') {
+        } else if (letter.playerId == 'PLAYER2') {
           buttonElement.style.backgroundColor = 'green';
         } else if (letter.playerId == 'PLAYER3') {
           buttonElement.style.backgroundColor = 'red';
         } else if (letter.playerId == 'PLAYER4') {
-          buttonElement.style.backgroundColor == 'blue';
+          buttonElement.style.backgroundColor = 'blue';
         }
       });
     }
@@ -233,40 +236,34 @@ function buttonclick(i, j) {
   U.GridRow = i;
   U.GridColumn = j;
   if (idx == 0)
-    U.PlayerIdx = "XPLAYER";
+    U.PlayerIdx = "PLAYER1";
   else if (idx == 1)
-    U.PlayerIdx = "OPLAYER";
+    U.PlayerIdx = "PLAYER2";
   else if (idx == 2)
     U.PlayerIdx = "PLAYER3";
   else if (idx == 3)
     U.PlayerIdx = "PLAYER4";
-  else
-    alert("Too many players in the game");
+
   U.GameId = gameid;
 
   if(start[0] == -1)
   {
     var buttonElement = document.querySelector('table tr:nth-child(' + (i + 1) + ') td:nth-child(' + (j + 1) + ') button');
 
-    if(U.PlayerIdx == 'XPLAYER'){
+    if(U.PlayerIdx == "PLAYER1"){
       buttonElement.style.backgroundColor = 'yellow';
     }
-    else if(U.PlayerIdx == 'OPLAYER'){
+    else if(U.PlayerIdx == "PLAYER2"){
       buttonElement.style.backgroundColor = 'green';
     }
     //Created by Abubakar Kassim
-    else if (U.PlayerIdx == 'PLAYER3')
+    else if (U.PlayerIdx == "PLAYER3")
     {
-      alert
       buttonElement.style.backgroundColor = 'red';
     }
-    else if (U.PlayerIdx == 'PLAYER4')
+    else if (U.PlayerIdx == "PLAYER4")
     {
       buttonElement.style.backgroundColor = 'blue';
-    }
-    else
-    {
-      alert("TOO MANY PLAYERS HAVE JOINED");
     }
     start[0] = i;
     start[1] = j;
@@ -275,10 +272,10 @@ function buttonclick(i, j) {
   {
     var buttonElement = document.querySelector('table tr:nth-child(' + (i + 1) + ') td:nth-child(' + (j + 1) + ') button');
 
-    if(U.PlayerIdx == 'XPLAYER'){
+    if(U.PlayerIdx == 'PLAYER1'){
       buttonElement.style.backgroundColor = 'yellow';
     }
-    else if(U.PlayerIdx == 'OPLAYER')
+    else if(U.PlayerIdx == 'PLAYER2')
     {
       buttonElement.style.backgroundColor = 'green';
     }
@@ -289,7 +286,6 @@ function buttonclick(i, j) {
     }
     else if (U.PlayerIdx == 'PLAYER4')
     {
-      alert("4 Players have have joined");
       buttonElement.style.backgroundColor = 'blue';
     }
 
@@ -298,8 +294,10 @@ function buttonclick(i, j) {
   }
   
 
-
-  connection.send(JSON.stringify(U));
-  console.log(JSON.stringify(U));
+  if(playersJoined >= 4)
+  {
+    connection.send(JSON.stringify(U));
+    console.log(JSON.stringify(U));
+  }
 }
 </script>

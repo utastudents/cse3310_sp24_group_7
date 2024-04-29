@@ -10,7 +10,6 @@ public class PickedLetters {
          this.row = row;
          this.col = col;
          this.playerId = playerId;
-    
     }
 
     public int getRow()
