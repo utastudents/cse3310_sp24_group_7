@@ -57,7 +57,7 @@ public class WordBank {
             for (String word : wordList) {
                 boolean wordPlaced = false;
                 int attempts = 0;
-                while (!wordPlaced && attempts < 15) {
+                while (!wordPlaced && attempts < 20) {
                     int row = random.nextInt(rows);
                     int col = random.nextInt(cols);
                     
@@ -237,6 +237,8 @@ public class WordBank {
         // for (String word : wordsPlaced) {
         //     System.out.println(word);
         // }
+        //System.out.println("Words Placed:");
+        //System.out.println(wordsPlaced.size());
         
         fillEmptyCells(rows, cols);
         //printGrid();
