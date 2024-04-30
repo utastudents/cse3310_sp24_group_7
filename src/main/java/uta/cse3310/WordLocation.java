@@ -66,4 +66,12 @@ public class WordLocation {
     public void setDirection(int direction) {
         this.direction = direction;
     }
+
+    @Override
+    public String toString() {
+        return "Word: " + word +
+                ", Start: (" + startRow + ", " + startCol + ")" +
+                ", End: (" + endRow + ", " + endCol + ")" +
+                ", Direction: " + direction;
+    }
 }

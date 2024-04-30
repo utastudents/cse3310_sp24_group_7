@@ -8,7 +8,6 @@ import java.util.List;
 import java.util.Random;
 
 //known bugs
-//wordsPlaced is not accurate. not every word in wordsPlaced is actually placed on the grid
 
 public class WordBank {
     private char[][] grid;
@@ -25,7 +24,7 @@ public class WordBank {
         try (BufferedReader br = new BufferedReader(new FileReader(fileName))) {
             String line;
             while ((line = br.readLine()) != null) {
-                if (line.length() >= 4 && random.nextDouble() < 0.025 && wordList.size() < 100) {
+                if (line.length() >= 4 && random.nextDouble() < 0.015 && wordList.size() < 200) {
                     wordList.add(line);
                 }
             }
@@ -54,10 +53,11 @@ public class WordBank {
         Random random = new Random();
         while (overlapCount < 5) { // Continue generating grid until at least 5 words are overlapped
             wordsPlaced.clear();
+            wordLocations.clear();
             for (String word : wordList) {
                 boolean wordPlaced = false;
                 int attempts = 0;
-                while (!wordPlaced && attempts < 10) {
+                while (!wordPlaced && attempts < 15) {
                     int row = random.nextInt(rows);
                     int col = random.nextInt(cols);
                     
@@ -91,7 +91,7 @@ public class WordBank {
 
                             end[0] = row+word.length()-1;
                             end[1] = col; 
-                            wordLocations.add(new WordLocation(word, start[0], start[1], end[0], end[1], direction));     //This is causing errors 
+                            wordLocations.add(new WordLocation(word, start[0], start[1], end[0], end[1], direction));
                         }
                     } else if (direction == 1 && col + word.length() <= cols) {
                         // Horizontal placement
@@ -124,7 +124,6 @@ public class WordBank {
                             end[0] = row;
                             end[1] = col+word.length()-1; 
                             wordLocations.add(new WordLocation(word, start[0], start[1], end[0], end[1], direction));
-                            //ArrayList.add(new wordLocation(word,start,end,direction));     This is causing errors 
                         }
                     } else if (direction == 2 && row - word.length() >= -1) {
                         // Reverse vertical placement
@@ -157,7 +156,6 @@ public class WordBank {
                             end[0] = row-word.length()+1;
                             end[1] = col;
                             wordLocations.add(new WordLocation(word, start[0], start[1], end[0], end[1], direction));
-                            //ArrayList.add(new wordLocation(word,start,end,direction));     This is causing errors 
                         }
                     } else if (direction == 3 && col - word.length() >= -1) {
                         // Reverse horizontal placement
@@ -190,7 +188,6 @@ public class WordBank {
                             end[0] = row;
                             end[1] = col-word.length()+1;
                             wordLocations.add(new WordLocation(word, start[0], start[1], end[0], end[1], direction));
-                            //ArrayList.add(new wordLocation(word,start,end,direction));     This is causing errors 
                         }
                     } else if (direction == 4 && row + word.length() <= rows && col + word.length() <= cols) {
                         // Diagonal down-right placement
@@ -221,7 +218,6 @@ public class WordBank {
                             end[0] = row+word.length()-1;
                             end[1] = col+word.length()-1;
                             wordLocations.add(new WordLocation(word, start[0], start[1], end[0], end[1], direction));
-                            //ArrayList.add(new wordLocation(word,start,end,direction));     This is causing errors 
                         }
                     }
                     attempts++;
@@ -229,24 +225,24 @@ public class WordBank {
             }
             if (overlapCount < 5) {
                 clearGrid();
+                wordsPlaced.clear();
+                wordLocations.clear();
             }
         }
 
-        // Print the grid
         printGrid();
 
-        // Print the words placed
         // System.out.println("Overlapped Words: " + overlapCount);
         // System.out.println("Words Placed:");
         // for (String word : wordsPlaced) {
         //     System.out.println(word);
         // }
-
+        
         fillEmptyCells(rows, cols);
         //printGrid();
 
         //System.out.println("Word Location:");
-        //for (String word : wordsPlaced) {                             //print for wordLocation after error is fixed 
+        //for (String word : wordsPlaced) {                             
             //System.out.println(wordLocation);
        // }
     }
@@ -274,23 +270,6 @@ public class WordBank {
             }
         }
     }
-
-    // public List<String> getWordList() {
-    //     return wordList;
-    // }
-
-    // public String getRandomWord() {
-    //     // Return a random word from wordList
-    //     return null;
-    // }
-
-    // public boolean containsWord(String word) {
-    //     return wordList.contains(word);
-    // }
-
-    // public boolean isValidWord(String word) {
-    //     return wordList.contains(word);
-    // }
 
     private void clearGrid() {
         for (int i = 0; i < grid.length; i++) {

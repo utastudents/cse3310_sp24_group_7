@@ -15,6 +15,7 @@ public class WordBankTest {
     public List<String> wordList;
    public  WordBank wordBank;
    public List<String> wordsPlaced;
+   private List<WordLocation> wordLocations;
 
    @Before
     public void setUp() {
@@ -38,10 +39,36 @@ public class WordBankTest {
     public void testGenerateGrid() { 
         assertTrue(wordsPlaced.isEmpty());
         wordBank.generateGrid(25, 25, wordList); 
+        System.out.println("Words Placed:");
         wordsPlaced = wordBank.getWordsPlaced();
         assertNotNull(wordsPlaced);
         //assertFalse(wordsPlaced.isEmpty());
     }
+    //Test if wordsPlaced is correct 
+    @Test
+    public void testWordsPlaced() { 
+        assertTrue(wordsPlaced.isEmpty());
+        //assertTrue(wordLocations.isEmpty());
+        wordBank.generateGrid(25, 25, wordList); 
 
+        wordsPlaced = wordBank.getWordsPlaced();
+        wordLocations = wordBank.getWordLocations();
+
+        System.out.println("Word Location:");
+        System.out.println(wordLocations.size());
+        for (WordLocation location : wordLocations) {
+            System.out.println(location.toString());
+        }
+        
+        System.out.println("Words Placed:");
+        for (String word : wordsPlaced) {
+            System.out.println(word);
+        }
+        System.out.println(wordsPlaced.size());
+        
+        assertNotNull(wordsPlaced);
+        assertTrue(wordsPlaced.size()==wordLocations.size());
+        //assertFalse(wordsPlaced.isEmpty());
+    }
 }
  
