@@ -103,13 +103,13 @@ socket.onmessage = function(event) {
                 document.getElementById('lobby').style.display = "none";
                 document.getElementById('gameScreen').style.display = "block";
                 generateGrid(obj.wordBank.grid);
-                generateScoreboard(obj.scoreBoard.scores);
+                generateScoreboard(obj);
                 displayWords(obj.wordBank.wordsPlaced);
             }
             else
             {
               updateGrid(obj.pickedLetters);
-              updateScoreboard(obj.scoreBoard.scores);
+              updateScoreboard(obj);
 
               if (obj.chatBox.messageSent == true) {
                 var messages = obj.chatBox.messages;
@@ -303,25 +303,27 @@ function generateGrid(grid) {
   });
 }
 
-function generateScoreboard(scores) {
+function generateScoreboard(obj) {
+    var scores = obj.scoreBoard.scores;
     var scoreboard = document.getElementById('scoreBoard');
-        scoreboard.innerHTML = ''; // Clear previous scores
-        scores.forEach(function (score, index) {
-            var p = document.createElement('p');
-            p.textContent = "Player " + (index + 1) + ": 0";
-            scoreboard.appendChild(p);
-        });
-    }
+    scoreboard.innerHTML = ''; // Clear previous scores
+    scores.forEach(function (score, index) {
+        var p = document.createElement('p');
+        p.textContent = obj.playerNames[index] + ": 0";
+        scoreboard.appendChild(p);
+    });
+}
 
-    function updateScoreboard(scores) {
-        var scoreboard = document.getElementById('scoreBoard');
-        scoreboard.innerHTML = ''; // Clear existing scores
-        scores.forEach(function (score, index) {
-            var p = document.createElement('p');
-            p.textContent = "Player " + (index + 1) + ": " + score;
-            scoreboard.appendChild(p);
-        });
-    }
+function updateScoreboard(obj) {
+    var scores = obj.scoreBoard.scores;
+    var scoreboard = document.getElementById('scoreBoard');
+    scoreboard.innerHTML = ''; // Clear previous scores
+    scores.forEach(function (score, index) {
+        var p = document.createElement('p');
+        p.textContent = obj.playerNames[index] + ": " + score;
+        scoreboard.appendChild(p);
+    });
+}
 
     function displayWords(words) {
         var listContainer = document.getElementById('wordList');

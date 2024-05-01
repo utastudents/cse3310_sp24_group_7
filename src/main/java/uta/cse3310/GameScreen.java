@@ -8,6 +8,7 @@ import java.util.TimerTask;
 
 public class GameScreen {
     public PlayerType Players;
+    public String playerNames[];
     public int GameId;
     private ChatBox chatBox;
     private WordBank wordBank;
@@ -26,6 +27,8 @@ public class GameScreen {
     {
         // Created by Abubakar Kassim
         this.players = new ArrayList<PlayerType>();
+
+        playerNames = new String[4];
 
         wordBank = new WordBank();
         List<String> wordList = new ArrayList<>();
@@ -86,6 +89,27 @@ public class GameScreen {
         else if (P == PlayerType.PLAYER4) 
         {
             retval = 3;
+        }
+        return retval;
+    }
+
+    public String PlayerToNickname(PlayerType P)
+    {
+        String retval = "UNKNOWN";
+        if (P == PlayerType.PLAYER1) {
+            retval = playerNames[0];
+        } 
+        else if (P == PlayerType.PLAYER2) 
+        {
+            retval = playerNames[1];
+        }
+        else if (P == PlayerType.PLAYER3) 
+        {
+            retval = playerNames[2];
+        }
+        else if (P == PlayerType.PLAYER4) 
+        {
+            retval = playerNames[3];
         }
         return retval;
     }
@@ -183,7 +207,7 @@ public class GameScreen {
         {
             if(!U.Msg.isEmpty())
             {
-                chatBox.addMessage(U.PlayerIdx + ": " + U.Msg);
+                chatBox.addMessage(PlayerToNickname(U.PlayerIdx) + ": " + U.Msg);
                 chatBox.setMessageSent(true);
             }
         }

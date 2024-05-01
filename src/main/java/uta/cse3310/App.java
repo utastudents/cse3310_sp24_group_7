@@ -97,6 +97,7 @@ public class App extends WebSocketServer {
       // Add the first player
           G.Players = uta.cse3310.PlayerType.PLAYER1;
           G.playersJoined++;
+          G.playerNames[0] = nickname;
           ActiveGames.add(G);
           System.out.println(" creating a new Game");
         } else if (G.Players == PlayerType.PLAYER1) {
@@ -104,17 +105,20 @@ public class App extends WebSocketServer {
           System.out.println(" not a new game");
           G.Players = uta.cse3310.PlayerType.PLAYER2;
           G.playersJoined++;
+          G.playerNames[1] = nickname;
         } else if (G.Players == PlayerType.PLAYER2) {
       // join an existing game
           System.out.println(" not a new game");
           G.Players = uta.cse3310.PlayerType.PLAYER3;
           G.playersJoined++;
+          G.playerNames[2] = nickname;
         }
         else {
       // join an existing game
           System.out.println(" not a new game");
           G.Players = uta.cse3310.PlayerType.PLAYER4;
           G.playersJoined++;
+          G.playerNames[3] = nickname;
         }
 
         System.out.println("G.players is " + G.Players);
