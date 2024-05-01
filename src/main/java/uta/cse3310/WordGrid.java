@@ -12,7 +12,7 @@ public class WordGrid{
 	public char[][] grid;
     	public int gridSize;
     	public Random random;
-		private List<String> wordList;
+		public List<String> wordList;
 		
 	
 	public WordGrid(int size){
