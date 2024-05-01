@@ -6,11 +6,10 @@
   <link rel="stylesheet" href="style.css">
   <style>
     /* Entry Screen */
-    body {
+    .non-game {
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
       margin: 0;
       background-color: white;
       color: black;
@@ -37,7 +36,6 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
     }
 
     .nickname-form {
@@ -76,48 +74,48 @@
   </style>
 </head>
 <body>
-  <!-- Entry Screen -->
-  <div class="container" id="main-container">
-    <div class="nickname-form" id="nickname-form">
-      <h1 class="main-heading">Welcome to The Word Search Game!</h1>
-      <label class="nickname" for="nickname">Enter Your Nickname:</label>
-      <input type="text" id="nickname" name="nickname">
-      <button id="submit" class="custom-button">Submit</button>
+  <div class="non-game">
+    <!-- Entry Screen -->
+    <div class="container" id="main-container">
+      <div class="nickname-form" id="nickname-form">
+        <h1 class="main-heading">Welcome to The Word Search Game!</h1>
+        <label class="nickname" for="nickname">Enter Your Nickname:</label>
+        <input type="text" id="nickname" name="nickname">
+        <button id="submit" class="custom-button">Submit</button>
+      </div>
     </div>
-  </div>
 
-  <!-- Lobby Screen -->
-  <div id="lobby" style="display:none">
-    <h1 id="lobbyh1" class="main-heading2">LOBBY</h1>
-    <h2 id="lobbyh2">LOBBY LIST</h2>
-    <div class="lobbyContent">
-      <table id="gameTable2" class="serverTable">
-
-        <tr>
-          <th>Players Joined</th>
-          <th>Join</th>
-        </tr>
-        
-        
-      </table>
-      <div id="gamesAvailable">
-        <!-- Lobby list will be populated dynamically -->
-      </div>        
+    <!-- Lobby Screen -->
+    <div id="lobby" style="display:none">
+      <h1 id="lobbyh1" class="main-heading2">LOBBY</h1>
+      <h2 id="lobbyh2">LOBBY LIST</h2>
+      <div class="lobbyContent">
+        <table id="gameTable2" class="lobby-table">
+          <!-- Dynamic rows will be inserted here -->
+        </table>
+        <div id="gamesAvailable">
+          <!-- Lobby list will be populated dynamically -->
+        </div>        
+      </div>
     </div>
   </div>
 
   <div id= "gameScreen" style="display:none">
-    <div id="gameTable"></div>
+    <div id="gameTable">
+      <table id="grid" class="game-table">
+        <!-- Game grid will be handled here -->
+      </table>
+    </div>
     <div id="sidePanels" style="position: absolute; right: 20px; top: 20px; width: 30%;">
       <div id="scoreBoard" style="border: 1px solid black; padding: 10px; margin-bottom: 10px;"></div>
       <div id="wordList" style="border: 1px solid black; padding: 10px; overflow-y: auto; max-height: 300px;"></div>
     </div>
 
 
-    <div id="chatBox">
+    <div id="chatbox">
       <div id="messages" style="height: 200px; overflow-y: scroll; background: #f1f1f1; margin-bottom: 10px;"></div>
-      <input type="text" id="message" placeholder="Type message here..." style="width: 70%;">
-      <button id="sendButton">Send</button>
+      <input type="text" id="message" placeholder="Type message here..." style="width: 70%;" onkeypress="if(event.keyCode==13) chat();">
+      <button onclick="chat();">Send</button>
     </div>
   </div>
 

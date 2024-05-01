@@ -274,7 +274,7 @@ function generateGrid(grid) {
             });
         table.appendChild(tr);
     });
-    var container = document.getElementById('gameTable');
+    var container = document.getElementById('grid');
         container.innerHTML = ''; // Clear previous table
         container.appendChild(table);
     }
@@ -282,15 +282,15 @@ function generateGrid(grid) {
     function updateGrid(letters) {
       if(start[0] != -1 && end[0] != -1)
       {
-        var buttonElementStart = document.querySelector('table tr:nth-child(' + (start[0] + 1) + ') td:nth-child(' + (start[1] + 1) + ') button');
-        var buttonElementEnd = document.querySelector('table tr:nth-child(' + (end[0] + 1) + ') td:nth-child(' + (end[1] + 1) + ') button');
+        var buttonElementStart = document.querySelector('#grid tr:nth-child(' + (start[0] + 1) + ') td:nth-child(' + (start[1] + 1) + ') button');
+        var buttonElementEnd = document.querySelector('#grid tr:nth-child(' + (end[0] + 1) + ') td:nth-child(' + (end[1] + 1) + ') button');
         buttonElementStart.style.backgroundColor = '';
         buttonElementEnd.style.backgroundColor = '';
         start = [-1, -1];
         end = [-1, -1];
     }
     letters.forEach(function (letter) {
-        var buttonElement = document.querySelector('table tr:nth-child(' + (letter.row + 1) + ') td:nth-child(' + (letter.col + 1) + ') button');
+        var buttonElement = document.querySelector('#grid tr:nth-child(' + (letter.row + 1) + ') td:nth-child(' + (letter.col + 1) + ') button');
         if (letter.playerId == 'PLAYER1') {
           buttonElement.style.backgroundColor = 'yellow';
       } else if (letter.playerId == 'PLAYER2') {
@@ -353,7 +353,7 @@ function generateScoreboard(scores) {
 
     if(start[0] == -1)
     {
-        var buttonElement = document.querySelector('table tr:nth-child(' + (i + 1) + ') td:nth-child(' + (j + 1) + ') button');
+        var buttonElement = document.querySelector('#grid tr:nth-child(' + (i + 1) + ') td:nth-child(' + (j + 1) + ') button');
 
         if(U.PlayerIdx == "PLAYER1"){
           buttonElement.style.backgroundColor = 'yellow';
@@ -375,7 +375,7 @@ function generateScoreboard(scores) {
   }
   else if(end[0] == -1)
   {
-    var buttonElement = document.querySelector('table tr:nth-child(' + (i + 1) + ') td:nth-child(' + (j + 1) + ') button');
+    var buttonElement = document.querySelector('#grid tr:nth-child(' + (i + 1) + ') td:nth-child(' + (j + 1) + ') button');
 
     if(U.PlayerIdx == 'PLAYER1'){
       buttonElement.style.backgroundColor = 'yellow';
