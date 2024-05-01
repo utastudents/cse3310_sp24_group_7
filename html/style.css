@@ -1,60 +1,167 @@
-body {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: black;
-    color: white;
-  }
-  
-  .container {
-    text-align: center;
-  }
-  
-  .nickname-form {
-    margin-top: 20px;
-  }
-  
-  .nickname-form label {
-    color: white;
-    font-size: 18px;
-  }
-  
-  .main-heading {
-    font-size: 36px;
-    font-weight: bold;
-    margin-bottom: 20px;
-    padding: 20px;
-    border: 2px solid #007bff;
-    border-style: double;
-    border-color: #007bff;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
-    font-family: 'Open Sans';
-  }
-
-  .custom-button {
-    padding: 5px 24px;
-    font-size: 16px;
-    height: auto;
-    line-height: 1;
-    display: inline-block;
-    text-align: center;
-    background-color: #007bff;
-    color: white;
-    border: 2px solid #007bff;
-    border-radius: 8px;
-    cursor: pointer;
-  }
-  
-  .custom-button:hover {
-    background-color: #0056b3;
-    border-color: #0056b3;
-  }
-.highlight {
-    background-color: yellow;
-    color: black; 
+.main-heading2 {
+  font-size: 46px;
+  font-weight: bold;
+  padding: 20px;
+  border: 10px solid #007bff;
+  border-style: double;
+  border-color: #0015ff;
+  border-radius: 8px;
+  box-shadow: 0 0 10px rgba(0, 123, 255, 0.5);
+  background-color: black;
+  color: white;
+  position: absolute;
+  top: -20px;
+  left: 50%;
+  height: 50px;
+  width: 1190px;
+  transform: translateX(-50%);
 }
-  
-  
+
+
+/*--- LOBBY SCREEN ---*/
+#lobby {
+  padding: 32px 40px;
+  text-align: center;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start; /* Added to align elements at the top */
+}
+
+.lobbyContent {
+  position: absolute;
+  top: 20%;
+  right: 32%;
+  display: flex;
+  padding: 10px;
+  border-radius: 20px;
+  width: 400px;
+  height: 130px;
+}
+
+.lobbyButton {
+  margin: 20px; /* Added margin to create spacing between buttons */
+  display: flex; /* Add flex display */
+  align-items: center; /* Align items vertically center */
+  justify-content: center; /* Align items horizontally center */
+  color: white;
+  background-color: #007bff;
+  border: 4px solid #0015ff;
+  border-radius: 24px;
+  padding: 8px 20px; /* Adjusted padding */
+  font-size: 30px;
+  cursor: pointer;
+  font-weight: 700;
+  height: 70px;
+  width: 220px;
+}
+
+.lobbyButton:hover {
+  background-color: #0015ff;
+}
+
+#gameTable2 {
+  position: absolute;
+  top: calc(50% - -30px); /* Adjusted top position */
+  right: calc(50% - 240px); /* Adjusted right position */
+  border: 3px solid rgb(255, 255, 255);
+  box-sizing: 1000px;
+  width: 570px;
+  border-color: black;
+  border-width: 5px;
+  border-style: solid;
+  border-collapse: collapse;
+  text-align: center;
+  background-color: transparent; /* Set background color with opacity */
+  color: black;
+  font-size: 20px;
+}
+
+#gameTable2 th,
+#gameTable2 td {
+  padding: 8px;
+  border: 1px solid #ddd;
+}
+
+#gameTable2 td:nth-child(2) {
+  width: 80px; /* Set the width of the second column to 80px */
+}
+
+#lobbyh2 {
+  position: absolute;
+  top: 28%;
+  left: 28%;
+  font-weight: bold;
+  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 30px;
+}
+
+#gameTable2 th {
+  padding: 12px;
+  text-align: center;
+  font-size: 18px;
+  color: black; /* Change text color */
+  border: 2px solid rgb(0, 0, 0);
+}
+
+#gameTable2 td {
+  padding: 12px;
+  text-align: center;
+  font-size: 18px;
+  color: black; /* Change text color */
+  border: 2px solid rgb(0, 0, 0);
+}
+
+.serverTable .JoinAGame{
+  font-size: 20px;
+  font-style: bold;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight:800;
+  text-align: center;
+  width: 100px;
+  height: 35px;
+  border-radius: 10px;
+  color: rgb(0, 0, 0);
+  background-color: green;
+}
+
+/* CSS for the "Ready" button */
+.ready-button {
+  background-color: red; /* Initial background color */
+  color: white;
+  border: none;
+  padding: 12px 20px;
+  cursor: pointer;
+  border-radius: 5px;
+  outline: none;
+}
+
+/* CSS for the "Ready" button when it's in the "ready" state */
+.ready-button.ready {
+  background-color: green; /* Background color when button is clicked */
+}
+
+/* Game Screen */
+#gameTable {
+  float: left;
+  width: 65%;
+}
+#sidePanels {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  width: 30%;
+  display: flex;
+  flex-direction: column;
+}
+#scoreBoard, #wordList {
+  border: 1px solid black;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+#wordList {
+  overflow-y: auto;
+  flex-grow: 1;
+}
+#chatbox {
+  clear: both;
+}

@@ -1,88 +1,35 @@
-package uta.cse3310;/*
+package uta.cse3310;
+
 import java.util.ArrayList;
+import java.util.List;
 
-public class LobbyScreen 
-{
-    public ArrayList<String> playerNames = new ArrayList<String>();
-    public ArrayList<Boolean> playerStatus = new ArrayList<Boolean>();
-    public int playerNum = 0;
-    public int playersReady = 0;
-    public int gamesAvailable = 0;
+public class LobbyScreen {
+    private List<Player> players;
+    private int lobbyId;
+    private ChatBox chatBox;
+    private int playersJoined;
 
-    // Constructor
-    public LobbyScreen(ArrayList<PlayerType> playerList)
-    {
-      this.playerNames = new ArrayList<>();
-      this.playerStatus = new ArrayList<>();
-      this.playerNum = 0;
-      this.playersReady = 0;
-      this.gamesAvailable = 0;
-
-      updateLobby(playerList);
+    public LobbyScreen() {
+        players = new ArrayList<>();
+        playersJoined = 0;
+        chatBox = new ChatBox();
     }
 
-    public void startGame()
-    {
-        return;
-    }
-    public void createLobby()
-    {
-        return;
-    }
-    public void waitingLobby()
-    {
-        return;
-    }
-    public void addPlayer(String nickname)
-    {
-        //Adding a player and displaying their information
-        return;
-    }
-    public void removePlayer(String nickname)
-    {
-        return;
-    }
-
-    public void updateGamesAvailable(GameScreen[] games){
-      gamesAvailable = 0;
-      for(GameScreen g: games){
-        if(g.isOpen == true){
-          gamesAvailable++;
+    public void addPlayer(Player player) {
+        if (playersJoined < 4) {
+            players.add(player);
+            playersJoined++;
+            System.out.println(player + " joined the lobby.");
+        } else {
+            System.out.println("Lobby is full. Cannot add more players.");
         }
-      }
+    }
+    
+
+    public void update(UserEvent U) {
+        System.out.println("Received update from Player " + U.PlayerIdx + ": " + U.Msg);
+        // Handle the update logic here, such as updating UI or broadcasting to other players
     }
 
-    public String enterMessage(String message)
-    {
-        return message;
-    }
-    public String displayMessage (String nickname, String message)
-    {
-        //Display the username with the following information
-        return "message";
-        /*
-         * displayMessage("RSG", "Nice Score"):
-         * EX: RSG: Nice Score
-         */
-    /*}
-
-    public void updateLobby(ArrayList<PlayerType> playerList){
-         // Clear previous lobby state
-         this.playerNames.clear();
-         this.playerStatus.clear();
-         this.playerNum = 0;
-         this.playersReady = 0;
- 
-         // Populate lobby state with the new player list
-         for (PlayerType player : playerList) {
-             this.playerNames.add(player.name);
-             this.playerStatus.add(player.isReady);
-             this.playerNum++;
- 
-             if (player.isReady) {
-                 this.playersReady++;
-        }
-      }
+    // Getters and setters for lobbyId and chatBox omitted for brevity
 }
-}
-*/
