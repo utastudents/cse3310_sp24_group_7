@@ -32,7 +32,7 @@ function handleSubmission() {
   
   console.log("Submitting nickname to server: " + nickname);
   
-  socket = new WebSocket("ws://localhost:9107");
+  socket = new WebSocket("ws://" + window.location.hostname + ":9107");
   
     // Handle WebSocket socket opened
   socket.onopen = function(event) {
