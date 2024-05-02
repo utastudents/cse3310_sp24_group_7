@@ -39,6 +39,8 @@ public class App extends WebSocketServer {
   int gameId = 1;
   LobbyScreen lobby;
   int playerId = 0;
+  
+
 
   public App(int port) {
     super(new InetSocketAddress(port));
@@ -91,35 +93,33 @@ public class App extends WebSocketServer {
         if (G == null) {
           G = new GameScreen();
           G.GameId = gameId;
-          gameId++;
       // Add the first player
           G.Players = uta.cse3310.PlayerType.PLAYER1;
           G.playersJoined++;
-          G.playerNames[0] = nickname;
           ActiveGames.add(G);
-          System.out.println(" creating a new Game");
+          System.out.println("   \nWelcome to THE WORD SEARCH GAME!");
+          System.out.println("   \n\nYOUR GAME ID: " + gameId);
+          System.out.println("\n\n");
+
         } else if (G.Players == PlayerType.PLAYER1) {
       // join an existing game
-          System.out.println(" not a new game");
+          System.out.println("   Waiting for 2 players to join...");
           G.Players = uta.cse3310.PlayerType.PLAYER2;
           G.playersJoined++;
-          G.playerNames[1] = nickname;
         } else if (G.Players == PlayerType.PLAYER2) {
       // join an existing game
-          System.out.println(" not a new game");
+          System.out.println("   Waiting for 1 player to join...");
           G.Players = uta.cse3310.PlayerType.PLAYER3;
           G.playersJoined++;
-          G.playerNames[2] = nickname;
         }
         else {
       // join an existing game
-          System.out.println(" not a new game");
+          System.out.println("Full Lobby. Starting your game!");
           G.Players = uta.cse3310.PlayerType.PLAYER4;
           G.playersJoined++;
-          G.playerNames[3] = nickname;
         }
 
-        System.out.println("G.players is " + G.Players);
+        System.out.println(nickname + " is " + G.Players);
 
     // allows the websocket to give us the Game when a message arrives
         conn.setAttachment(G);
@@ -143,7 +143,7 @@ public class App extends WebSocketServer {
 
             // Broadcast the new player's nickname to all connected clients
         broadcastPlayerJoined(nickname, conn);
-        broadcastPlayerList(activeUsers);
+        broadcastPlayerList(activeUsers, gameId);
 
         if(G.playersJoined == 4)
         {
@@ -152,8 +152,12 @@ public class App extends WebSocketServer {
 
           System.out.println(jsonString);
           broadcast(jsonString);
+          
+      
+          broadcastGameEnded();
+          resetGameLobby();
+          gameId++;
         }
-
       } 
       else {
             // Send error response to the client: Nickname not Unique
@@ -189,20 +193,6 @@ public class App extends WebSocketServer {
     }
 
 
-
-
-
-
-
-
-
-
-
-    // !GAME SCREEN! \\
-
-
-    // Inside the 'onMessage' method
-
   }  
 
     // Method to get a JsonArray of active user nicknames
@@ -214,19 +204,18 @@ public class App extends WebSocketServer {
     return activeUsersArray;
   }
 
-    // Method to broadcast the updated active users list to all connected clients
-  private void broadcastPlayerList(Set<Player> activeUsers) {
+  private void broadcastPlayerList(Set<Player> activeUsers, int gameId) {
     Gson gson = new Gson();
     JsonObject playerListUpdate = new JsonObject();
     playerListUpdate.addProperty("type", "player_list_update");
-
     JsonArray activeUsersArray = getActiveUsersArray();
     playerListUpdate.add("players", activeUsersArray);
+    playerListUpdate.addProperty("gameId", gameId); // Send the gameId property
 
     for (WebSocket conn : getConnections()) {
-      conn.send(gson.toJson(playerListUpdate));
+        conn.send(gson.toJson(playerListUpdate));
     }
-  }
+}
 
 
     // Method to broadcast the "player_joined" message to all connected clients
@@ -243,23 +232,36 @@ public class App extends WebSocketServer {
       }
     }
 
-    // Add a new method to broadcast game state to all players
-    private void broadcastGameState(String gameState) {
-      for (Player player : playerList) {
-        player.getPlayerConn().send(gameState);
-      }
-    }
+  
 
     // Method to validate nickname uniqueness
     private boolean isNicknameUnique(String nickname) {
       for (Player player : playerList) {
         if (player.getNickname().equals(nickname)) {
-          System.out.println("Nickname not unique.");
+          System.out.println("Username already taken. Please try again.");
             return false; // Nickname is not unique
           }
         }
     return true; // Nickname is unique
   }
+
+  //Handle if a game ends / player disconects
+  private void broadcastGameEnded() {
+    Gson gson = new Gson();
+    JsonObject gameEndedMessage = new JsonObject();
+    gameEndedMessage.addProperty("type", "game_started");
+
+    for (WebSocket conn : getConnections()) {
+        conn.send(gson.toJson(gameEndedMessage));
+    }
+}
+
+    private void resetGameLobby() {
+      activeUsers.clear();
+      playerList.clear();
+      ActiveGames.clear();
+      playerId = 0;
+    }
 
   @Override
   public void onClose(WebSocket conn, int code, String reason, boolean remote) {
@@ -282,15 +284,15 @@ public class App extends WebSocketServer {
     }
 
         // Broadcast the updated active users list to all remaining connected clients
-    broadcastPlayerList(activeUsers);
+    broadcastPlayerList(activeUsers, gameId);
 
         // Reset games and update lobby if no players connected
     if (playerList.isEmpty()) {
       System.out.println("\n0 Players Detected.");
       System.out.println("CLEARING LOBBY AND RESETTING GAMES...");
+
+
     }
-    playerId--;
-    gameId--;
   }
 
 
