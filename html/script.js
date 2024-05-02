@@ -77,6 +77,12 @@ function startGame() {
 
 }
 
+function getVersion(version)
+{
+    head = document.getElementById("title")
+    head.innerHTML = version;
+}
+
 // Function to handle button click on the game screen
 function buttonclick(index) {
     console.log("Button clicked: " + index);

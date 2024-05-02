@@ -39,8 +39,6 @@ public class App extends WebSocketServer {
   int gameId = 1;
   LobbyScreen lobby;
   int playerId = 0;
-  
-
 
   public App(int port) {
     super(new InetSocketAddress(port));

@@ -18,6 +18,7 @@ public class GameScreen {
     public int[] end;
     public int playersJoined;
     int counter = 3;
+    public String version;
 
     //Created by Abubakar Kassim
     public ArrayList<PlayerType> players;
@@ -27,6 +28,12 @@ public class GameScreen {
     {
         // Created by Abubakar Kassim
         this.players = new ArrayList<PlayerType>();
+
+        version = "The Word Search Game";
+        if(System.getenv("VERSION") != null)
+        {
+            version = System.getenv("VERSION");
+        }
 
         playerNames = new String[4];
 

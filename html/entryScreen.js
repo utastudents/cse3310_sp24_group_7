@@ -48,6 +48,16 @@ function handleSubmission() {
 socket.onmessage = function(event) {
   console.log("Message received from server:", event.data);
   const response = JSON.parse(event.data);
+
+  var msg;
+    msg = event.data;
+
+        console.log("Message received: " + msg);
+        const obj = JSON.parse(msg);
+
+        getVersion(obj.version);
+
+
   if (response.type === "acknowledge") {
     document.getElementById("nickname-form").style.display = "none";
     document.getElementById("lobby").style.display = "block";
@@ -86,13 +96,6 @@ socket.onmessage = function(event) {
         activeUsers = response.players; // Update the activeUsers array with the list from the server
         updateLobbyWithActiveUsers(activeUsers); // Update the lobby with the active users list
     } else {
-
-        var msg;
-        msg = event.data;
-
-        console.log("Message received: " + msg);
-        const obj = JSON.parse(msg);
-
 
         playersJoined = obj.playersJoined;
 
@@ -401,6 +404,12 @@ function updateScoreboard(obj) {
 }
 socket.send(JSON.stringify(U));
 console.log(JSON.stringify(U));
+}
+
+function getVersion(version)
+{
+    head = document.getElementById("title");
+    head.innerHTML = version;
 }
 
 
