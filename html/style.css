@@ -23,8 +23,8 @@
   padding: 32px 40px;
   text-align: center;
   display: flex;
-  justify-content: space-between;
-  align-items: flex-start; /* Added to align elements at the top */
+  flex-direction: column;
+  align-items: center;
 }
 
 .lobbyContent {
@@ -62,7 +62,7 @@
 #gameTable2 {
   position: absolute;
   top: calc(50% - -30px); /* Adjusted top position */
-  right: calc(50% - 240px); /* Adjusted right position */
+  right: calc(50% - 280px); /* Adjusted right position */
   border: 3px solid rgb(255, 255, 255);
   box-sizing: 1000px;
   width: 570px;
@@ -86,13 +86,57 @@
   width: 80px; /* Set the width of the second column to 80px */
 }
 
-#lobbyh2 {
-  position: absolute;
-  top: 28%;
-  left: 28%;
+#lobby-heading-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: -120px;
+  flex-direction: row; /* Change to row */
+}
+
+#lobbyh2, #lobbyh3 {
   font-weight: bold;
-  font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
-  font-size: 30px;
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  margin: 0;
+}
+
+#lobbyh2 {
+  font-size: 40px;
+  margin-right: 100px; /* Add some spacing between h2 and h3 */
+}
+
+#lobbyh3 {
+  margin-top: 20px;
+  font-size: 14px;
+}
+
+#lobbyh4 {
+  font-size: 24px; /* Increase the font size */
+  font-weight: bold;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Use a modern font */
+  display: flex;
+  align-items: center;
+  position: absolute;
+  right: 50%;
+  top: 80%;
+  transform: translateX(50%);
+  color: #ffffff; /* Set text color to white */
+  text-shadow: 5px 5px 7px rgba(0, 0, 0, 0.5); /* Add a text shadow */
+  background-color: #3444ff; 
+  padding: 10px 20px; /* Add some padding */
+  border-radius: 20px; /* Add rounded corners */
+  transition: all 0.3s ease; /* Add a transition effect */
+}
+
+#lobbyh4:hover {
+  background-color: #0015ff; /* Change background color on hover */
+  box-shadow: 0 0 10px rgba(0, 6, 12, 0.8); /* Add a glow effect on hover */
+  transform: translateX(50%) scale(1.1); /* Scale up on hover */
+}
+
+#lobbyh4 span {
+  margin: 0 10px; /* Add some spacing between the text elements */
 }
 
 #gameTable2 th {
@@ -126,7 +170,7 @@
 
 /* CSS for the "Ready" button */
 .ready-button {
-  background-color: red; /* Initial background color */
+  background-color: rgb(73, 26, 26); /* Initial background color */
   color: white;
   border: none;
   padding: 12px 20px;
@@ -138,6 +182,10 @@
 /* CSS for the "Ready" button when it's in the "ready" state */
 .ready-button.ready {
   background-color: green; /* Background color when button is clicked */
+}
+
+.ready-button:hover {
+  background-color: rgb(255, 0, 0); /* Background color when button is clicked */
 }
 
 /* Game Screen */
@@ -165,3 +213,5 @@
 #chatbox {
   clear: both;
 }
+
+
