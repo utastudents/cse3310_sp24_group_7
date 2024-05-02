@@ -2,16 +2,17 @@
 <html>
 <head>
   <meta charset="utf-8">
-  <title id="title">Word Search Game</title>
+  <title>Word Search Game</title>
   <link rel="stylesheet" href="style.css">
   <style>
     /* Entry Screen */
-    .non-game {
+    body {
       display: flex;
       justify-content: center;
       align-items: center;
       margin: 0;
       background-color: white;
+      height: 100vh;
       color: black;
       font-family: 'Orbitron', sans-serif;
     }
@@ -19,9 +20,9 @@
     .custom-button {
       padding: 10px 24px;
       font-size: 16px;
-      background-color: #007bff;
-      color: rgb(206, 122, 122);
-      border: 2px solid #0015ff;
+      background-color: rgb(22, 54, 212);
+      color: rgb(255, 255, 255);
+      border: 2px solid #000000;
       border-radius: 8px;
       cursor: pointer;
       margin-top: 20px;
@@ -29,7 +30,7 @@
 
     .custom-button:hover {
       background-color: #0015ff;
-      border-color: #0056b3;
+      border-color: #000000;
       color: white;
     }
     .container {
@@ -74,52 +75,51 @@
   </style>
 </head>
 <body>
-  <div class="non-game">
-    <!-- Entry Screen -->
-    <div class="container" id="main-container">
-      <div class="nickname-form" id="nickname-form">
-        <h1 class="main-heading">Welcome to The Word Search Game!</h1>
-        <label class="nickname" for="nickname">Enter Your Nickname:</label>
-        <input type="text" id="nickname" name="nickname">
-        <button id="submit" class="custom-button">Submit</button>
-      </div>
-    </div>
-
-    <!-- Lobby Screen -->
-    <div id="lobby" style="display:none">
-      <h1 id="lobbyh1" class="main-heading2">LOBBY</h1>
-      <h2 id="lobbyh2">LOBBY LIST</h2>
-      <div class="lobbyContent">
-        <table id="gameTable2" class="lobby-table">
-          <!-- Dynamic rows will be inserted here -->
-        </table>
-        <div id="gamesAvailable">
-          <!-- Lobby list will be populated dynamically -->
-        </div>        
-      </div>
+  <!-- Entry Screen -->
+  <div class="container" id="main-container">
+    <div class="nickname-form" id="nickname-form">
+      <h1 class="main-heading">Welcome to The Word Search Game!</h1>
+      <label class="nickname" for="nickname">Enter Your Nickname:</label>
+      <input type="text" id="nickname" name="nickname">
+      <button id="submit" class="custom-button">Submit</button>
     </div>
   </div>
 
-  <div id= "gameScreen" style="display:none">
-    <div id="gameTable">
-      <table id="grid" class="game-table">
-        <!-- Game grid will be handled here -->
-      </table>
+  <!-- Lobby Screen -->
+<div id="lobby" style="display:none">
+  <h1 id="lobbyh1" class="main-heading2">LOBBY</h1>
+  <div id="lobby-heading-container">
+    <h2 id="lobbyh2">LOBBY LIST</h2>
+    <h3 id="lobbyh3">Waiting for Players...</h3>
+    <h4 id="lobbyh4"></h4>
+  </div>
+  <div class="lobbyContent">
+    <table id="gameTable2" class="serverTable">
+      <!-- Table content -->
+    </table>
+    <div id="gamesAvailable">
+      <!-- Lobby list will be populated dynamically -->
     </div>
+  </div>
+</div>
+
+
+  <div id= "gameScreen" style="display:none">
+    <div id="gameTable"></div>
     <div id="sidePanels" style="position: absolute; right: 20px; top: 20px; width: 30%;">
       <div id="scoreBoard" style="border: 1px solid black; padding: 10px; margin-bottom: 10px;"></div>
       <div id="wordList" style="border: 1px solid black; padding: 10px; overflow-y: auto; max-height: 300px;"></div>
     </div>
 
 
-    <div id="chatbox">
+    <div id="chatBox">
       <div id="messages" style="height: 200px; overflow-y: scroll; background: #f1f1f1; margin-bottom: 10px;"></div>
-      <input type="text" id="message" placeholder="Type message here..." style="width: 70%;" onkeypress="if(event.keyCode==13) chat();">
-      <button onclick="chat();">Send</button>
+      <input type="text" id="message" placeholder="Type message here..." style="width: 70%;">
+      <button id="sendButton">Send</button>
     </div>
   </div>
 
-  <script src="entryScreen.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
 
