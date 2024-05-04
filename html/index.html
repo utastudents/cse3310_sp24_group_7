@@ -70,6 +70,7 @@
     #player-list {
       list-style-type: none;
       padding: 0;
+    
     }
 
   </style>
@@ -77,6 +78,7 @@
 <body>
   <!-- Entry Screen -->
   <div class="container" id="main-container">
+    <h1 id="title" style="color: black; position: absolute; left: 20px; top: 30px; font-size: 15px;"></h1>
     <div class="nickname-form" id="nickname-form">
       <h1 class="main-heading">Welcome to The Word Search Game!</h1>
       <label class="nickname" for="nickname">Enter Your Nickname:</label>
@@ -104,7 +106,7 @@
 </div>
 
 
-  <div id= "gameScreen" style="display:none">
+  <div id= "gameScreen" style="display:none;">
     <div id="gameTable"></div>
     <div id="sidePanels" style="position: absolute; right: 20px; top: 20px; width: 30%;">
       <div id="scoreBoard" style="border: 1px solid black; padding: 10px; margin-bottom: 10px;"></div>

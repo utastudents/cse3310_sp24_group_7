@@ -23,133 +23,137 @@ class UserEvent {
 let start = [-1, -1];
 let end = [-1, -1];
 
+window.onload = function() {
+    getVersion("1.0.0 (EST. 2024)");
+  }
+
 // Function to handle nickname submission
 function handleSubmission() { 
-    const nickname = usernameInput.value.trim();
+  const nickname = usernameInput.value.trim();
 
-    if (nickname === "") {
-      console.log("Nickname is empty.");
-      return;
-  }
-  
-  console.log("Submitting nickname to server: " + nickname);
-  
-  socket = new WebSocket("ws://" + window.location.hostname + ":9107");
-  
-    // Handle WebSocket socket opened
-  socket.onopen = function(event) {
-    console.log("WebSocket socket opened successfully.");
-    const message = {
-        type: "nickname",
-        value: nickname
-    };
-    socket.send(JSON.stringify(message)); // Send nickname to server
+  if (nickname === "") {
+    console.log("Nickname is empty.");
+    return;
+}
+
+console.log("Submitting nickname to server: " + nickname);
+
+socket = new WebSocket("ws://" + window.location.hostname + ":9107");
+
+  // Handle WebSocket socket opened
+socket.onopen = function(event) {
+  console.log("WebSocket socket opened successfully.");
+  const message = {
+      type: "nickname",
+      value: nickname
+  };
+  socket.send(JSON.stringify(message)); // Send nickname to server
 };
 
-    // Handle WebSocket message received
-    socket.onmessage = function(event) {
-    console.log("Message received from server:", event.data);
-    const response = JSON.parse(event.data);
-    if (response.type === "acknowledge") {
-      document.getElementById("nickname-form").style.display = "none";
-      document.getElementById("lobby").style.display = "block";
-      if ('YouAre' in response) {
-        if (response.YouAre == "PLAYER1") {
-          idx = 0;
-        } else if (response.YouAre == "PLAYER2") {
-          idx = 1;
-        } else if (response.YouAre == "PLAYER3") {
-          idx = 2;
-        } else if (response.YouAre == "PLAYER4") {
-          idx = 3;
-        }
-        gameId = response.GameId;
+  // Handle WebSocket message received
+  socket.onmessage = function(event) {
+  console.log("Message received from server:", event.data);
+  const response = JSON.parse(event.data);
+  if (response.type === "acknowledge") {
+    document.getElementById("nickname-form").style.display = "none";
+    document.getElementById("lobby").style.display = "block";
+    if ('YouAre' in response) {
+      if (response.YouAre == "PLAYER1") {
+        idx = 0;
+      } else if (response.YouAre == "PLAYER2") {
+        idx = 1;
+      } else if (response.YouAre == "PLAYER3") {
+        idx = 2;
+      } else if (response.YouAre == "PLAYER4") {
+        idx = 3;
       }
-      addPlayerToLobby(nickname, response.playerId); // Add the player to the lobby with player ID
-      addUserToGame(response.gameId, nickname);
-      updateLobbyWithActiveUsers(activeUsers); // Update the lobby with the active users list
+      gameId = response.GameId;
+    }
+    addPlayerToLobby(nickname, response.playerId); // Add the player to the lobby with player ID
+    addUserToGame(response.gameId, nickname);
+    updateLobbyWithActiveUsers(activeUsers); // Update the lobby with the active users list
 
-      
-      // Check if there are already four players
-      if (activeUsers.length >= 4) {
-        startGame(); // Start the game if there are four players
-      }
-    } else if (response.type === "nickname_error") {
+    
+    // Check if there are already four players
+    if (activeUsers.length >= 4) {
+      startGame(); // Start the game if there are four players
+    }
+  } else if (response.type === "nickname_error") {
+    console.error("Nickname error:", response.message);
+    alert("Error: " + response.message);
+    document.getElementById("nickname").value = ""; // Clear the input field
+  } else if (response.type === "player_list_update") {
+    activeUsers = response.players; // Update the activeUsers array with the list from the server
+    updateLobbyWithActiveUsers(activeUsers); // Update the lobby with the active users list
+    // Check if there are already four players
+    if (activeUsers.length >= 4) {
+      startGame(); // Start the game if there are four players
+    }
+  } else if (response.type === "nickname_error") {
       console.error("Nickname error:", response.message);
       alert("Error: " + response.message);
       document.getElementById("nickname").value = ""; // Clear the input field
-    } else if (response.type === "player_list_update") {
-      activeUsers = response.players; // Update the activeUsers array with the list from the server
-      updateLobbyWithActiveUsers(activeUsers); // Update the lobby with the active users list
-      // Check if there are already four players
-      if (activeUsers.length >= 4) {
-        startGame(); // Start the game if there are four players
-      }
-    } else if (response.type === "nickname_error") {
-        console.error("Nickname error:", response.message);
-        alert("Error: " + response.message);
-        document.getElementById("nickname").value = ""; // Clear the input field
-    } 
-      else if (response.type == "game_started") {
-        // Reset
-        clearLobbyTable(); 
-        document.getElementById('lobby').style.display = "none";
-        document.getElementById('gameScreen').style.display = "block";
-      }
-      else if (response.type === "chat_message") {
-        // Handle chat messages
-        handleChatMessage(response.message);
-      }
-      else {
-
-        var msg;
-        msg = event.data;
-
-        console.log("Message received: " + msg);
-        const obj = JSON.parse(msg);
-
-
-        playersJoined = obj.playersJoined;
-
-        if(gameId == obj.GameId)
-        {
-            if(obj.playersJoined == 4)
-            {
-                clearLobbyTable(); // Clear the lobby table and reset the player count
-                document.getElementById('lobby').style.display = "none";
-                document.getElementById('gameScreen').style.display = "block";
-                generateGrid(obj.wordBank.grid);
-                generateScoreboard(obj.scoreBoard.scores);
-                displayWords(obj.wordBank.wordsPlaced);
-            }
-            else
-            {
-              updateGrid(obj.pickedLetters);
-              updateScoreboard(obj.scoreBoard.scores);
-
-              if (obj.chatBox.messageSent == true) {
-                var messages = obj.chatBox.messages;
-            var lastMessage = messages[messages.length - 1]; // Get the last message from the messages array
-            var messagesDiv = document.getElementById('messages');
-            var messageElement = document.createElement('div');
-            messageElement.textContent = lastMessage; // Display the last message
-            messagesDiv.appendChild(messageElement);
-            messagesDiv.scrollTop = messagesDiv.scrollHeight; // Auto scroll to the bottom
-          }//ERROR typing in chat before two players in game messes it up
-      } 
   } 
+    else if (response.type == "game_started") {
+      // Reset
+      clearLobbyTable(); 
+      document.getElementById('lobby').style.display = "none";
+      document.getElementById('gameScreen').style.display = "block";
+    }
+    else if (response.type === "chat_message") {
+      // Handle chat messages
+      handleChatMessage(response.message);
+    }
+    else {
+
+      var msg;
+      msg = event.data;
+
+      console.log("Message received: " + msg);
+      const obj = JSON.parse(msg);
+
+
+      playersJoined = obj.playersJoined;
+
+      if(gameId == obj.GameId)
+      {
+          if(obj.playersJoined == 4)
+          {
+              clearLobbyTable(); // Clear the lobby table and reset the player count
+              document.getElementById('lobby').style.display = "none";
+              document.getElementById('gameScreen').style.display = "block";
+              generateGrid(obj.wordBank.grid);
+              generateScoreboard(obj.scoreBoard.scores);
+              displayWords(obj.wordBank.wordsPlaced);
+          }
+          else
+          {
+            updateGrid(obj.pickedLetters);
+            updateScoreboard(obj.scoreBoard.scores);
+
+            if (obj.chatBox.messageSent == true) {
+              var messages = obj.chatBox.messages;
+          var lastMessage = messages[messages.length - 1]; // Get the last message from the messages array
+          var messagesDiv = document.getElementById('messages');
+          var messageElement = document.createElement('div');
+          messageElement.textContent = lastMessage; // Display the last message
+          messagesDiv.appendChild(messageElement);
+          messagesDiv.scrollTop = messagesDiv.scrollHeight; // Auto scroll to the bottom
+        }//ERROR typing in chat before two players in game messes it up
+    } 
+} 
 }
 };
 
 
 socket.onclose = function(event) {
-  console.log("WebSocket socket closed.");
-  alert("WebSocket socket closed. Please try again later.");
+console.log("WebSocket socket closed.");
+alert("WebSocket socket closed. Please try again later.");
 };
 
 socket.onerror = function(error) {
-  console.error("WebSocket encountered error:", error);
-  alert("WebSocket encountered error: " + error.message);
+console.error("WebSocket encountered error:", error);
+alert("WebSocket encountered error: " + error.message);
 };
 }
 
@@ -305,8 +309,9 @@ function chat() {
   console.log(JSON.stringify(U));
 }  // Existing game UI update logic here
 
+
 function generateGrid(grid) {
-  var table = document.createElement('table');
+  var table = document.createElement('gameTable');
   grid.forEach(function (row, rowIndex) {
       var tr = document.createElement('tr');
       row.forEach(function (column, columnIndex) {
@@ -322,7 +327,7 @@ function generateGrid(grid) {
           });
       table.appendChild(tr);
   });
-  var container = document.getElementById('grid');
+  var container = document.getElementById('gameTable');
       container.innerHTML = ''; // Clear previous table
       container.appendChild(table);
   }
@@ -330,15 +335,15 @@ function generateGrid(grid) {
   function updateGrid(letters) {
     if(start[0] != -1 && end[0] != -1)
     {
-      var buttonElementStart = document.querySelector('#grid tr:nth-child(' + (start[0] + 1) + ') td:nth-child(' + (start[1] + 1) + ') button');
-      var buttonElementEnd = document.querySelector('#grid tr:nth-child(' + (end[0] + 1) + ') td:nth-child(' + (end[1] + 1) + ') button');
+      var buttonElementStart = document.querySelector('#gameTable tr:nth-child(' + (start[0] + 1) + ') td:nth-child(' + (start[1] + 1) + ') button');
+      var buttonElementEnd = document.querySelector('#gameTable tr:nth-child(' + (end[0] + 1) + ') td:nth-child(' + (end[1] + 1) + ') button');
       buttonElementStart.style.backgroundColor = '';
       buttonElementEnd.style.backgroundColor = '';
       start = [-1, -1];
       end = [-1, -1];
   }
   letters.forEach(function (letter) {
-      var buttonElement = document.querySelector('#grid tr:nth-child(' + (letter.row + 1) + ') td:nth-child(' + (letter.col + 1) + ') button');
+      var buttonElement = document.querySelector('#gameTable tr:nth-child(' + (letter.row + 1) + ') td:nth-child(' + (letter.col + 1) + ') button');
       if (letter.playerId == 'PLAYER1') {
         buttonElement.style.backgroundColor = 'yellow';
     } else if (letter.playerId == 'PLAYER2') {
@@ -351,24 +356,22 @@ function generateGrid(grid) {
 });
 }
 
-function generateScoreboard(obj) {
-  var scores = obj.scoreBoard.scores;
+function generateScoreboard(scores) {
   var scoreboard = document.getElementById('scoreBoard');
   scoreboard.innerHTML = ''; // Clear previous scores
   scores.forEach(function (score, index) {
       var p = document.createElement('p');
-      p.textContent = obj.playerNames[index] + ": 0";
+      p.textContent = "Player " + (index + 1) + ": 0";
       scoreboard.appendChild(p);
   });
 }
 
-function updateScoreboard(obj) {
-  var scores = obj.scoreBoard.scores;
+function updateScoreboard(scores) {
   var scoreboard = document.getElementById('scoreBoard');
   scoreboard.innerHTML = ''; // Clear previous scores
   scores.forEach(function (score, index) {
       var p = document.createElement('p');
-      p.textContent = obj.playerNames[index] + ": " + score;
+      p.textContent = "Player " + (index + 1) + ": " + score;
       scoreboard.appendChild(p);
   });
 }
@@ -399,11 +402,11 @@ function updateScoreboard(obj) {
   else if (idx == 3)
       U.PlayerIdx = "PLAYER4";
 
-  U.GameId = gameid;
+  U.GameId = gameId;
 
   if(start[0] == -1)
   {
-      var buttonElement = document.querySelector('#grid tr:nth-child(' + (i + 1) + ') td:nth-child(' + (j + 1) + ') button');
+      var buttonElement = document.querySelector('#gameTable tr:nth-child(' + (i + 1) + ') td:nth-child(' + (j + 1) + ') button');
 
       if(U.PlayerIdx == "PLAYER1"){
         buttonElement.style.backgroundColor = 'yellow';
@@ -425,7 +428,7 @@ function updateScoreboard(obj) {
 }
 else if(end[0] == -1)
 {
-  var buttonElement = document.querySelector('#grid tr:nth-child(' + (i + 1) + ') td:nth-child(' + (j + 1) + ') button');
+  var buttonElement = document.querySelector('#gameTable tr:nth-child(' + (i + 1) + ') td:nth-child(' + (j + 1) + ') button');
 
   if(U.PlayerIdx == 'PLAYER1'){
     buttonElement.style.backgroundColor = 'yellow';
@@ -451,9 +454,11 @@ socket.send(JSON.stringify(U));
 console.log(JSON.stringify(U));
 }
 
-function getVersion(version)
-{
-  head = document.getElementById("title");
-  head.innerHTML = version;
-}
-
+function getVersion(version) {
+    var head = document.getElementById("title");
+    if (head) {
+      head.innerHTML = version;
+    } else {
+      console.error("Element with ID 'title' not found in the DOM.");
+    }
+  }
